@@ -1,0 +1,125 @@
+body,html,ul,li,p,img,h1,h2,h3,h4,h5,video,audio,span,a{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family:'PingFang SC','Microsoft YaHei','SimSun','Arial', sans-serif;
+}
+li{
+    list-style-type: none;
+}
+img{
+    display: block;
+}
+section{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: url('../img/invalidName@2x.jpg') no-repeat center/cover;
+    position: relative;
+}
+section>p{
+    text-align: center;
+    margin: 1.146667rem 0;
+}
+section>p>img{
+    width: 6.826667rem;
+    margin: 0 auto;
+}
+.qiu{
+    width: 2.133333rem;
+    position: fixed;
+    right: .4rem;
+    top: -1.1rem;
+}
+.box{
+    padding: 0 .666667rem;
+    position: relative;
+}
+.box>img{
+    width: 100%;
+}
+.text{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.intor{
+    text-align: center;
+    line-height: .8rem;
+    font-size: .533333rem;
+    background: linear-gradient(to right, dodgerBlue, skyBlue);
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-top: .28rem;
+}
+.intor:first-child{
+    margin-top: 0.8rem;
+}
+.col_intor{
+    color: rgb(245, 166, 35);
+    margin-top: 0.8rem;
+    font-size: .373333rem;
+    text-align: center;
+}
+.but{
+    width: 5.893333rem;
+    margin: .266667rem auto 0;
+    height: 1.066667rem;
+    border-radius: .533333rem;
+    background: linear-gradient(to right, dodgerBlue, skyBlue); 
+    text-align: center;
+    line-height: 1.066667rem;
+    color: #fff;
+    font-size: .373333rem;
+    letter-spacing: .026667rem;
+    cursor: pointer;
+}
+
+/* 商城 */
+.store>p{
+    margin: 0 0 0.5rem;
+    height: 3.79rem;
+    padding-top: 1.5rem;
+    box-sizing: border-box;
+}
+.activity{
+    padding: 0 .4rem;
+    margin-bottom: .613333rem;
+    position: relative;
+    text-align: center;
+}
+.activity .hint{
+    position: absolute;
+    bottom: .666667rem;
+    display: inline;
+    text-align:left;
+    left: 37%;
+    color: #999;
+    font-size: .32rem;
+}
+.activity>img{
+    width: 100%;
+}
+.activity>p{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.time{
+    top: .853333rem;
+    font-size: .533333rem;
+}
+.open{
+    top: 2rem;
+    color: #fff;
+    opacity: .34;
+    letter-spacing: .026667rem;
+    font-size: .426667rem;
+}
+

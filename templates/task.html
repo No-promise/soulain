@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title></title>
+    <script src="../js/common/setDpr.js"></script>
+    <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/task.css">
+    <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script> -->
+</head>
+
+<body>
+    <div id="root" class="content">
+        <div class="suanliTotal" :style="{paddingTop:topValue}">
+            <h3>我的算力</h3>
+            <p v-cloak>{{totalSuanli}}</p>
+        </div>
+        <div class="suanliIntro">
+            <div class="suanliTitle">什么是算力？</div>
+            <div class="suanliDetail">
+                <p>
+                    算力是挖矿数量多少的决定因素。<span class="yellowTip">算力越高，挖到的矿就可能越多</span>。 每天通过参与各种任务来持续获得算力，您的总资产就会不断上升噢！
+                </p>
+                <p @click="openSLK()">布谷头条白皮书></p>
+            </div>
+        </div>
+        <div class="suanliTask" style="display:none">
+            <div class="taskTitle" >
+                {{totalTask}}
+            </div>
+            <ul class="doTask">
+                <!-- 当index为0，即数据是签到时，则不显示进度条 -->
+                <!-- 每个进度条的渲染根据Index去分别设置 -->
+                <li v-for="(item,index) in task" >
+                    <div class="taskImg">
+                        <img :src="item.taskImage" alt="">
+                    </div>
+                    <div class="taskDetail">
+                        <div class="taskProgress" >
+                            <p class="taskName" ><span> {{item.taskName}}</span><span>+{{item.totalAwardCount}}</span><span>{{item.awardUnit}}</span></p>
+                            <p class="taskAward" >{{item.taskContent}}</p>
+                            <div class="progressDetail" v-if="index!='0'">
+                                <div class="progress">
+                                    <div class="changeProgress" :style="{width:widthChange[index]}"></div>
+                                </div>
+                                <div class="suanliCount" >
+                                    <span>{{item.comProgCount}}</span>/<span>{{item.totalProCount}}</span><span>{{item.progUnit}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="taskBtn" :class="item.complete =='1' ? 'taskFinish':'' ">
+                            <div v-if="item.complete =='1'">
+                                已完成
+                            </div>
+                            <div v-else @click="doTask(item.taskCode)">
+                                {{item.taskButton}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script src="../js/common/vue.js"></script>
+<script>
+    new Vue({
+        el: '#root',
+        data: {
+            totalSuanli: '', //总算力
+            totalTask: '', //总任务名称
+            task: [], //任务列表
+            widthChange: [], //进度条长度
+            topValue: ''
+        },
+        created: function () {
+            this.getStateHeight();
+            this.waiting();//通知原生加载拖地动画
+        },
+        mounted: function () {
+            this.exposure();
+            this.getSuanli();
+            this.getdata();
+            //刷新页面的接口数据
+            this.reloading();
+        },
+        methods: {
+             exposure() {
+                    // window.JanesiApi.reqUrl = "http://118.25.10.151:8808/log/spm"
+                    var that = this
+                    var myDate = new Date().getTime()
+                    JanesiApi.trackApi('/log/spm', 'get', {
+                        eventType: 'show',
+                        eventTime: myDate,
+                        end_type: 'h5',
+                        url: window.location.href,
+                        referrer: '',
+                        h5_locaiton: 'task'
+                    }, function (res) {
+                        console.log('ok')
+                    })
+                },
+            waiting(){
+                    window.JanesiBridge.callNative('isLoaded', {})
+                },
+            reloading(){
+                    var that=this;
+                    window.JanesiBridge.commonNativeCallJS = function (res) {
+                        console.log(res)
+                        if (res.action == 'reloaded') {
+                        that.getdata();
+                        // that.getLoginState();
+                        // that.newUserTip();
+                    }
+                }
+                },
+            //获取状态栏和导航栏的高度
+            getStateHeight() { //原生对接已完
+                var that = this;
+                window.JanesiBridge.callNativeWithCallBack('getContentEdge', {}, function (res) {
+                    //callback 通知原生返回回调，获取状态栏的高度,动态的设置顶部高度
+                    console.log(res)
+                    var paddingValue = parseInt(res.top) + 'px';
+                    that.topValue = paddingValue;
+                    console.log(that.topValue);
+                });
+            },
+            getSuanli() {
+                var that = this;
+                // window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                var reqApi = '/app/soulian/slk/slk_info';
+                window.JanesiApi.sendApi(reqApi, 'post', {
+                    // 'userId':'1336'
+                }, function (res) {
+                    console.log(res)
+                    that.totalSuanli = res.result.totalPower;
+                })
+            },
+            getdata() { //接口已完
+                var that = this;
+                // window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                var reqApi = '/app/soulian/task/daily_task';
+                window.JanesiApi.sendApi(reqApi, 'post', {
+                    // 'userId': '1336',
+                    // 'appVersion':'2.1.0'
+                }, function (res) {
+                    console.log(res)
+                    if(res.result){
+                        document.querySelector('.suanliTask').style.display='block';
+                    }
+                    that.totalTask = res.result.taskContent;
+                    that.task = res.result.taskList;
+                    that.getProgress(that.task);
+                })
+            },
+            //动态的设置进度条
+            getProgress(task) {
+                console.log(task)
+                for (var i = 0; i < task.length; i++) {
+                    var comProg = task[i].comProgCount;
+                    var totalPro = task[i].totalProCount;
+                    this.widthChange[i] = comProg / totalPro * 2.36 + 'rem'
+                }
+            },
+            //打开白皮书
+            openSLK() {
+                window.JanesiBridge.callNative('open', {
+                    'url': "https://yun1.janesi.net/janesi-solian/solian-2.1/templates/white_paper.html",
+                    data: { needFullScreen: '1' }
+                });
+            },
+            //做任务
+            doTask(taskName) {
+                //console.log(taskName)//获取任务字节段，并传给原生
+                if (taskName == 'read_article' || taskName == 'read_duration' || taskName == 'share_item') {
+                    window.JanesiBridge.callNative('open', {
+                        'page': 'homePage'
+                    });
+                } else if (taskName == 'watch_video') {
+                    window.JanesiBridge.callNative('open', {
+                        'page': 'videoPage'
+                    });
+                } else if (taskName == 'invite') {
+                    window.JanesiBridge.callNative('open', {
+                        'url': 'https://yun1.janesi.net/janesi-solian/solian-2.1/templates/inviteFriends.html',
+                        data: { needFullScreen: '1' }
+                    });
+                }
+            },
+        }
+    })
+</script>
+
+</html>

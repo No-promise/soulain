@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>看新闻上布谷头条</title>
+  <!-- <script src="../js/common/setDpr.js"></script> -->
+  <script src="../js/common/flexible.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <style>
+    [v-cloak]{
+        display:none;
+    }
+    html,body{
+      width: 100%;
+      height: 100%;
+    }
+    #root {
+        width: 100%;
+        height: 110vh;
+        box-sizing: border-box;
+        display: block;
+        background: url(../icon/InviteAndCommunity/downLoadBg.jpg) no-repeat;
+        background-size: cover;
+    }
+    
+     /*%%%%%%  */
+     .toast {
+        position: fixed;
+        top: 8.1rem;
+        left: 50%;
+        margin-left: -1.88rem;
+        width: 3.76rem;
+        height: 1.28rem;
+        line-height: 1.28rem;
+        font-size: .43rem;
+        color: #fff;
+        background: rgba(0, 0, 0, .8);
+        border-radius: .22rem;
+        z-index: 9;
+        display: none;
+    }
+    .mask {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .8);
+        z-index: 9;
+    }
+    .guideIcon {
+        position: absolute;
+        right: 0;
+        width: 7.5rem;
+    }
+    /*顶部用户信息  */
+    .userInfo {
+        margin: 0 .53rem;
+        padding-top: .53rem;
+    }
+    .avator {
+        width: 1.6rem;
+        height: 1.6rem;
+        border-radius: 50%;
+    }
+    .userContent {
+        width: 6.9rem;
+        height: 1.6rem;
+        font-size: .4rem;
+        padding: 0 .53rem;
+        box-sizing: border-box;
+        border-radius: 1.6rem;
+        background-color: rgba(0, 0, 0, .2)
+    }
+    .userName {
+        text-align: left;
+        margin-top: .053rem;
+        /* margin-left: .133rem; */
+        color: #fed41f;
+        font-weight: bold;
+    }
+    .userGet {
+         font-size: .34rem; 
+        margin-bottom: .053rem;
+        text-align: left;
+        color: #fff;
+    }
+    .userGet span {
+        color: #fed41f;
+    }
+    .newsGift {
+        width: 7.2rem;
+        margin: .4rem 0;
+    }
+    .getBehavior {
+        margin: 0 .27rem;
+        width: 9.5rem;
+        height: 8.8rem;
+        background: url(../icon/InviteAndCommunity/downLoadRedBag.jpg) no-repeat;
+        background-size: cover; 
+        overflow: auto;
+    }
+    .buttons {
+        position: relative; 
+        margin-top: 5.6rem;  
+        width: 6.9rem;
+        height: 1.46rem;
+    }
+    .downBtn {
+        width: 100%; 
+    } 
+    .btnText {
+        position: absolute;
+        top: .15rem;;
+        left: 0;
+        right: 0;
+        color: #b85014;
+        font-size: .72rem;
+    }
+    /*邀请码  */
+    .block {
+        width: 100%;
+        position: relative;
+    }
+    .invitation {
+        position: absolute;
+        left: 50%;
+        margin-left: -2.6rem;
+        width: 5.33rem;
+        height: 1.2rem;
+        line-height: .1.2rem;
+        font-size: .85rem;
+        color: #333;
+        font-weight: bold;
+        border-radius: .2rem;
+        background-color: #fff;
+    }
+    .guideText {
+        margin-top: 1.6rem;
+        font-size: .43rem;
+        color: #fed41f;
+    }
+    .guideText span {
+        color: #fff;
+        text-decoration: underline;
+    }
+</style>
+    <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script> -->
+</head>
+
+<body>
+     
+    <div id="root" class="wrapper flex_alcc text_center">
+        <div class="mask" v-if="this.maskShow" v-cloak @click.self="closeMask()"> 
+            <img class="guideIcon" src="../icon/InviteAndCommunity/guideDown.jpg" >
+        </div>
+        <!--弹框提示  -->
+        <div class="toast text_center">
+            复制成功
+        </div>
+        <!--  -->
+        <div class="userInfo row flex_jcsb ">
+            <img class="avator" v-bind:src="userInfo.avator">
+            <div class="userContent wrapper flex_jcsa ">
+                <div class="userName " v-cloak >{{userInfo.nickName}}</div>
+                <div class="userGet">
+                    在布谷头条获得价值<span>{{userInfo.money}}</span>元的谷粒
+                </div>
+            </div>
+        </div>
+        <img class="newsGift" src="../icon/InviteAndCommunity/newsGift.jpg">  
+        <div class="getBehavior row flex_jcc">
+              <div class="buttons" @click="judgementAndDown()">  
+                    <img class="downBtn " src="../icon/InviteAndCommunity/btn_downLoad.jpg">    
+                 <div class="btnText text_center">
+                     上布谷领红包 
+                </div>  
+              </div>  
+        </div>
+        <!--邀请码  -->
+        <div class="block">
+            <div class="invitation text_center" v-cloak>
+                {{userInfo.inviteCode}}
+            </div> 
+        </div>
+        <p class="guideText">TA的邀请码<span @click="copyInvition()">点我复制></span></p>
+    </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script>
+var app = new Vue({
+    el: '#root',
+    data: {
+        maskShow:false,
+        userInfo:{
+            avator:'../img/articleAndMv/16.jpg',
+            nickName:'no-promise',
+            money:'',
+            inviteCode:'X123456'
+        }
+    },
+    created() {
+
+    },
+    mounted() {
+       window.JanesiApi.reqUrl = 'https://pre.soulian.janesi.com'
+    //    window.JanesiApi.reqUrl = 'https://soulian.janesi.com'
+        console.log(navigator.userAgent) 
+       this.getData()
+       var that = this
+      
+      
+    },
+    methods: {
+        // 获取用户信息
+        getData() {
+            var that = this
+            window.JanesiApi.sendApi('/api/soulian/outer/user_info', 'post', {
+                userId: that.getRequest()['userId']
+            }, function (e) {
+               console.log(e)
+               that.userInfo = e.result;
+            })
+        },
+        // 判断环境
+        judgementAndDown(){
+            var that = this;
+            // that.maskShow = true;
+            var ua = navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == "micromessenger") {
+				that.maskShow = true;
+			}else{
+                if(window.JanesiApi.isAndroid){
+                    alert(11)
+                }
+                if(window.JanesiApi.isiOS){
+                    window.location.href = 'https://itunes.apple.com/cn/app/id1385051424?mt=8'
+                }
+            }
+        },
+        // 关闭弹框
+        closeMask(){
+            var that = this;
+            that.maskShow = false;
+        },
+        // 复制
+        copyInvition(){
+            var invitation = document.querySelector('.invitation')
+            var text1 = invitation.innerHTML
+            console.log(text1)
+            if (text1.length < 1) return
+            var oInput = document.createElement('input')
+            oInput.value = text1
+            oInput.setAttribute('readOnly', 'readOnly')
+            document.body.appendChild(oInput)
+            oInput.select() // 选择对象
+            oInput.setSelectionRange(0, oInput.value.length)
+            document.execCommand("Copy") // 执行浏览器复制命令
+            oInput.className = 'oInput'
+            oInput.style.display = 'none'
+            document.querySelector('.toast').style.display = 'block'
+            setTimeout(function() {
+                document.querySelector('.toast').style.display = 'none'
+            }, 500);
+        },
+        // 获取参数
+        getRequest() {
+            var url = location.href; //获取整个地址栏地址
+            var theRequest = new Object();
+            if (url.indexOf('?') != -1) {
+                var str = url.split('?')[1]; //截取？之后的所有参数
+                str = str.split('&'); //将每个参数截取放置到数组
+                for (var i = 0; i < str.length; i++) {
+                theRequest[str[i].split('=')[0]] = unescape(str[i].split('=')[1]); //将属性及属性值分别归属到数组
+                }
+            }
+            return theRequest;
+        }
+    }
+})
+</script>
+
+</html>

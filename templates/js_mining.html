@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title>搜链挖矿</title>
+		<script src="../js/rems.js"></script>
+		<link rel="stylesheet" href="../css/mining.css">
+	</head>
+
+	<body id="body" style="visibility: hidden">
+		<section id="root" class="addBox">
+			<div class="addTop">
+				<div class="author page_turns" name="author">
+					<img src="" alt="">
+					<span></span>
+				</div>
+				<div class="jewel_power">
+					<div class="jewel_box page_turns" name="wallet">
+						<img src="../img/icon_slk@2x.png" alt="">
+						<span class="jewel_num"></span>
+					</div>
+					<div class="power_box page_turns" name="hashrate">
+						<img src="../img/icon_power1@2x.png" alt="">
+						<span class="power_num"></span>
+					</div>
+				</div>
+			</div>
+			<div class="minBox">
+
+				<!--<div class="login_jewel page_turns" name="login">-->
+					<!--<img src="../img/icon_kuang%20copy@2x.png" alt="">-->
+					<!--<span>开启登录</span>-->
+				<!--</div>-->
+
+				<!--<div class="jewel">-->
+					<!--<div></div>-->
+					<!--<span>{{item.diamondNum}}</span>-->
+				<!--</div>-->
+
+				<!--<div class="mine">-->
+					<!--<img src="../img/icon_kuang%20copy@2x.png" alt="">-->
+					<!--<div class="time">-->
+						<!--<div></div>-->
+						<!--<span>02:00:00</span>-->
+					<!--</div>-->
+					<!--<span>挖矿中</span>-->
+				<!--</div>-->
+			</div>
+			<div class="correlation">
+				<div class="correlation_top">
+					<span>公告：</span>
+					<marquee behavior="scroll" direction="left"></marquee>
+				</div>
+				<div class="correlation_bot">
+					<ul class="cro_list">
+						<li name="wallet" class="page_turns">
+							<div><img src="../img/icon_wallet@2x.png" alt=""></div>
+							<span>钱包</span>
+						</li>
+						<li name="hashrate" class="page_turns">
+							<div><img src="../img/icon_power@2x.png" alt=""></div>
+							<span class="hit">加速</span>
+							<span>算力</span>
+						</li>
+						<li name="white_paper" class="page_turns">
+							<div><img src="../img/icon_instruction@2x.png" alt=""></div>
+							<span>白皮书</span>
+						</li>
+						<li name="sugar" class="page_turns">
+							<div><img src="../img/icon_candy@2x.png" alt=""></div>
+							<span>糖果活动</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<!--<audio src="../img/5a128e3521c78.mp3"></audio>-->
+		<script src="../js/mui.min.js"></script>
+		<script src="../js/common/zepto.min.js"></script>
+		<script src="../js/js_mining.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			let game=new Game();
+			game.start();
+		</script>
+
+	</body>
+
+</html>

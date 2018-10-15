@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- <meta http-equiv="Access-Control-Allow-Origin" content="*" /> -->
+  <script src="../js/common/setDpr.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <link rel="stylesheet" href="../css/detail.css">
+  <title></title>
+</head>
+
+<body>
+  <div>
+    <ul class="recommend" id="list">
+
+    </ul>
+    <script src="../js/common/zepto.min.js"></script>
+    <script src="../js/common/JanesiBridges.js"></script>
+    <script src="../js/common/echo.js"></script>
+    <!-- <script src="../js/list.js"></script> -->
+    <!-- <script src="../js/detailCommon.js"></script> -->
+    <!-- <script src="../js/videoDetail.js"></script> -->
+    <script src="./js/list.js"></script>
+    <script>
+      window.JanesiApi.reqUrl = "http://10.10.10.23:8803"
+
+
+      window.JanesiApi.sendApi('/app/soulian/content/relevance', 'post', {
+        userId: '1285',
+        itemId: '2011559',
+        contentType: 'VIDEO',
+        title: '绝地求生刺激战场：每日击杀，刚枪，特辑萝卜小队'
+      }, function (e) {
+        console.log(e)
+        getList(e)
+      })
+
+      //         $.ajax({
+      //     type:'get',
+      //     url:'https://www.easy-mock.com/mock/5b062d23d14ea45a9a8954b0/toutiao/newList',
+      //     success:function(e){
+      //         getList(e);
+      //     }
+      // })
+    </script>
+
+</body>
+
+</html>

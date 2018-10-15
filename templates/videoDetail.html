@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+     <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>  -->
+    <script src="../js/common/setDpr.js"></script>
+    <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <title></title>
+    <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
+</head>
+
+<body>
+<div class="videoBox">
+    <video class="myvideo" preload="auto" width="100%" id="myvideo" controls
+           src="http://f10.v1.cn/site/15475701.mp4"
+           poster="http://p0.ifengimg.com/pmop/2018/0708/7CCD07ECF756DED407A26AE254FFF31B14384F9B_size33_w580_h326.jpeg"
+           webkit-playsinline='true' playsinline='true' x-webkit-airplay='true'></video>
+</div>
+<div class="video_Wrapper" id="video">
+    <!--弹框提示  -->
+    <div class="toast text_center">
+
+    </div>
+    <!--点赞 加算力  弹框-->
+    <div class="calculationToast wrapper flex_alcc text_center">
+        <img class="confirm" src="../icon/InviteAndCommunity/Combined Shape@2x.jpg">
+        <p class="success">点赞成功</p>
+        <p class="addCalculation">+<span class="addCalculationNum">5</span><span>算力</span></p>
+    </div>
+    <div class="video_tittle tittle">
+        $!{content.title}
+    </div>
+    <div class="readNums playTimes">
+        <span class="num">885</span>
+        <span class="txtscan">次播放</span>
+    </div>
+    <div class="author mvAuthor row flex_alcc flex_jcsb">
+        <div class="goAuthorPage row flex_alcc" authorId='1336' linkUrl="">
+            <!-- #if( "$!content.avatar" != "" ) -->
+                <img id="autherAvator" src="../img/articleAndMv/16.jpg" >
+            <!-- #end -->
+            <div class="authorName videoAuthorName"></div>
+        </div>
+        <div id="attention" class="text_center" isFollow="1">
+            <span id="attentionStatus">关注</span>
+        </div>
+    </div>
+    <!--标签  用循环  -->
+    <!-- #if( !$content.tag.phase && $content.tag.size()>0)
+        <div class="label row wrap">
+            #foreach ($item in $content.tag)
+                <div style="display: none">$!{item}</div>
+                #if($!{item})
+                    <div class="tag">$item</div>
+                #end
+            #end
+        </div>
+    #end -->
+    <div class="userBehavior row flex_alcc flex_jcc">
+        <div class="behavior row flex_alcc clickPraise">
+            <img id="clickPraise" src="../img/articleAndMv/Rectangle-path2@2x.png">
+            <div class="amount" isLike="0">965</div>
+        </div>
+
+        <div class="behavior row flex_alcc collectArticle">
+            <img id="collect" src="../img/articleAndMv/Rectangle-path1@2x.png">
+            <div id="state" isCollect="0">收藏</div>
+        </div>
+        <div class="report">举报</div>
+    </div>
+
+</div>
+<!--分割  -->
+<div class="grayLine"></div>
+<!--推荐  -->
+<div class="recommendTitle text_center">
+    相关推荐
+</div>
+<ul class="recommend" id="list">
+
+</ul>
+<script type="text/javascript">
+    window.reqUrl = "$!{reqUrl}";
+</script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="http://cdn.polyfill.io/v1/polyfill.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script src="../js/common/echo.js"></script>
+<script src="../js/list.js"></script>
+<script src="../js/detailCommon.js"></script>
+<script src="../js/videoDetail.js"></script>
+<script>
+
+
+</script>
+</body>
+</html>

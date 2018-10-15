@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <title></title>
+    <script src="../js/common/setDpr.js"></script>    
+    <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/wallet.css">
+    <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>  -->
+</head>
+
+<body>
+  <div id="root" class="content">
+    <div class="newTip" @click="changeImg()" v-cloak v-if="this.firstState=='1'" :style="{display:imgDisplay}">
+      <img src="../img/totalTip.png" v-show="this.tipImgState=='1'" :style="imgPosition">
+      <img src="../img/valTip.png" v-show="this.tipImgState=='2'" :style="imgPosition">
+      <img src="../img/upTip.png" v-show="this.tipImgState=='3'" :style="imgPosition">
+    </div>
+    <div class="SLKCount" :style="{paddingTop:topValue}">
+      <div class="totalSLK">
+        <span>总资产</span>
+        <img src="../img/icon_instruction@sss.png" alt="" @click="openSLK()">
+      </div>
+      <p class="activeSLK" :style="styleChange" @click="toLogin()" v-cloak>{{totalSLK}}</p>
+      <!-- <div class="tradeBtn" @click="toExchange()" style="display:none" :style="{display:tradingDis}">交易</div> -->
+      <div class="tradeBtn" @click="toExchange()">交易</div>
+    </div>
+    <div class="SLKValue">
+      <div class="price">
+        <div class="moneyValue">
+          <span>人民币价值（元）</span>
+          <span v-cloak>{{moneyValue}}</span>
+        </div>
+        <div class="changeValue">
+          <span>今日盈亏（元）</span>
+          <span v-cloak>{{changeValue}}</span>
+        </div>
+      </div>
+
+      <div class="market">
+        <div class="todayTitle">
+          今日价格（元）
+        </div>
+        <div class="todayPrice">
+          <span v-cloak>{{todayPrice}}</span>
+          <span :style="{color:fontColor}" v-cloak>{{changePrice}}%</span>
+        </div>
+        <div class="SLKMarket">
+          <div class="SLKtit">行情</div>
+          <div id="SLKecharts"></div>
+        </div>
+          <div class="tip">
+            汇率会受平台广告收益上下浮动，平台前期暂无收益，汇率会有所影响 敬请谅解
+          </div>
+        </div>
+      </div>
+  </div>
+      <script src="../js/common/zepto.min.js"></script>
+      <script src="../js/common/JanesiBridges.js"></script>
+      <script src="../js/common/echarts.min.js"></script>
+      <script src="../js/common/vue.js"></script>
+      <script>
+        new Vue({
+          el: '#root',
+          data: {
+            totalSLK: '', //总SLK
+            moneyValue: '', //人民币价值
+            changeValue: '', //汇率涨幅
+            todayPrice: '', //今日价格
+            changePrice: '', //价格涨幅
+            loginState: '', //登陆状态
+            firstState: '', //新手状态
+            tipImgState: '',
+            imgDisplay: '',
+            styleChange: {
+              // marginTop: '',
+              fontSize: '',
+              bottom: ''
+            },
+            fontColor: '#E63737', //盈亏字体颜色
+            isDisplay: false,
+            topValue: '',
+            imgPosition: {
+              top: '',
+            },
+            bodyDisplay: 'none',
+            // osType:'',
+            tradingDis:''
+          },
+          created: function () {
+            this.getLoginState();
+            this.getStateHeight();
+            this.newUserTip();
+            this.waiting();//通知原生加载拖地动画
+          },
+          mounted: function () {
+            // this.closeTrading();
+            this.exposure();
+            this.getdata();
+            // 刷新页面的接口数据            
+            this.reloading();
+            },
+        
+            methods:{
+                // 安卓关闭交易
+                // closeTrading(){
+                //     if (window.JanesiBridge.isAndroid) {
+                //         console.log('Android')
+                //         // this.osType='Android';
+                //         this.tradingDis="none"
+                //     }else{
+                //         this.tradingDis="block"
+                //     }
+                // },
+               exposure() {
+                    // window.JanesiApi.reqUrl = "http://118.25.10.151:8808/log/spm"
+                    var that = this
+                    var myDate = new Date().getTime()
+                    JanesiApi.trackApi('/log/spm', 'get', {
+                        eventType: 'show',
+                        eventTime: myDate,
+                        end_type: 'h5',
+                        url: window.location.href,
+                        referrer: '',
+                        h5_locaiton: 'wallet'
+                    }, function (res) {
+                        console.log('ok')
+                    })
+                },
+              clickTrack(){
+                    var that = this
+                    var myDate = new Date().getTime()
+                    JanesiApi.trackApi('/log/spm', 'get', {
+                        eventType: 'click',
+                        eventTime: myDate,
+                        end_type: 'h5',
+                        url: window.location.href,
+                        referrer: '',
+                        h5_locaiton: 'charge_icon'
+                    }, function (res) {
+                        console.log('ok')
+                    })
+                },
+                waiting(){
+                    window.JanesiBridge.callNative('isLoaded', {})
+                },
+                reloading(){
+                    var that=this;
+                    window.JanesiBridge.commonNativeCallJS = function (res) {
+                        console.log(res)
+                        if (res.action == 'reloaded') {
+                        console.log(that)    
+                        that.getdata();
+                        that.getLoginState();
+                        that.newUserTip();
+                    }
+                }
+                },
+            //获取是否登陆的状态
+            getLoginState() { //原生对接已完
+              var that = this;
+              window.JanesiBridge.callNativeWithCallBack('getUserInfo', {}, function (res) {
+                //callback 通知原生返回回调，获取登陆与否的状态,将状态存到loginState                                                                  
+                console.log(res)
+                that.loginState = res.loginState;
+                //根据登陆状态，渲染不同数据
+                that.isLogin();
+              });
+            },
+
+            //获取状态栏和导航栏的高度
+            getStateHeight() { //原生对接已完
+              var that = this;
+              window.JanesiBridge.callNativeWithCallBack('getContentEdge', {}, function (res) {
+                //callback 通知原生返回回调，获取状态栏的高度,动态的设置顶部高度
+                console.log(res)
+                var paddingValue=parseInt(res.top)+'px';
+                that.topValue=paddingValue;
+                // console.log(that.topValue);
+                });
+            },
+
+            //获取是否为新用户的状态
+            newUserTip() {
+              var that = this;
+              window.JanesiBridge.callNativeWithCallBack('shouldShowGuide', {
+                "position": 'wallet'
+              }, function (res) {
+                //callback 通知原生返回回调，获取状态栏的高度,动态的设置顶部高度
+                console.log(res)
+                that.firstState = res.show;
+                    if(that.firstState=='1'){
+                        that.tipImgState='1';
+                        that.imgPosition.top=that.topValue;
+                    }
+                    
+                });
+            },
+            //新手引导蒙层切换
+            changeImg(){
+                console.log(this.tipImgState)
+                var topHeight=document.querySelector('.SLKCount').offsetHeight;
+                this.imgPosition.top=topHeight+'px';
+                if(this.tipImgState=='1'){
+                    this.tipImgState='2'
+                }else if(this.tipImgState=='2'){
+                    this.tipImgState='3'
+                }else{
+                    this.imgDisplay='none';
+                    window.JanesiBridge.callNativeWithCallBack('shouldShowGuideFinish',{
+                    "position":'wallet'
+                    },function(res){});
+                }
+              
+            },
+
+           
+            getdata() { //接口已完
+                  var that = this;
+                  //无论登陆与否，今日价格、今日涨幅以及SLK行情都显示
+                  // window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                  var reqApi = '/app/soulian/slk/rate_record';
+                  window.JanesiApi.sendApi(reqApi, 'post', {}, function (res) {
+                    // console.log(res)
+                    that.todayPrice = res.result.rate;
+                    that.changePrice = res.result.extent;
+                    var xData = res.result.dateTime;
+                    var yData = res.result.rateRecord;
+                    that.initLine(xData, yData); //折线的渲染 
+                    if (that.changePrice.indexOf('+') != '-1') { //盈
+                      that.fontColor = '#E63737';
+                    } else { //亏
+                      that.fontColor = '#16BC84';
+                    }
+                  })
+                },
+
+            isLogin() { //接口已完
+                  var that = this;
+                  if (that.loginState == '1') {
+                    //调取接口，渲染数据
+                    // window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                    var reqApi = '/app/soulian/slk/slk_info';
+                    window.JanesiApi.sendApi(reqApi, 'post', {
+                      // 'userId':'1336'
+                    }, function (res) {
+                      console.log(res)
+                      that.totalSLK = res.result.totalSlk;
+                      that.moneyValue = '≈' + res.result.moneyValue;
+                      that.changeValue = res.result.income;
+                      that.styleChange.fontSize = '0.72rem';
+                      that.styleChange.bottom = '0.28rem';
+                      // that.styleChange.marginTop='0.2rem';
+                    })
+                  } else {
+                    that.totalSLK = '注册即送搜链克';
+                    that.moneyValue = '暂无';
+                    that.changeValue = '暂无';
+                    that.styleChange.fontSize = '0.48rem';
+                    that.styleChange.bottom = '0.45rem';
+                    // that.styleChange.marginTop='0.35rem';
+                  }
+                },   
+                openSLK() { //跳转白皮书
+                  window.JanesiBridge.callNative('open', {
+                    'url': "https://yun1.janesi.net/janesi-solian/solian-2.1/templates/white_paper.html",
+                    data:{needFullScreen:'1'}
+
+                  });
+                },
+                 
+            toLogin() { //搜链数据的事件，如果未登录跳转到登陆页面，否则点击无响应
+              if (this.loginState == '0') {
+                window.JanesiBridge.callNative('open', {
+                  'page': "toLogin"
+                });
+              } else {
+                return
+              }
+            },
+
+            toExchange() { //交易按钮的事件，如果已登陆则跳转到交易页面，否则跳转到登陆页面
+              this.clickTrack();
+              if (this.loginState == '0') {
+                window.JanesiBridge.callNative('open', {
+                  'page': "toLogin"
+                });
+              } else {
+                window.JanesiBridge.callNative('open', {
+                  'page': "toExchange"
+                });
+              }
+            },
+            //绘制折线图   
+            initLine(xData,yData) {
+            var myChart = echarts.init(document.getElementById('SLKecharts'));
+                // console.log(myChart)
+                myChart.setOption({
+                    grid: {
+                        left: '5%',
+                        right: '5%',
+                        top: '10%',
+                        bottom: '5%',
+                        containLabel: true
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'line',
+                            lineStyle: {
+                                width: 1,
+                                color: '#437CF7'
+                            }
+                        },
+                        formatter: function (params) {
+                            return params[0].value;
+                        },
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        boundaryGap: true,
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            color: "#A6A6A6", //刻度线标签颜色
+                            interval:0,
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                width: '1',
+                                color: "#EEEEEE", //坐标线颜色	
+                            }
+                        },
+                        data:xData
+                    }],
+                    yAxis: [{
+                        type: 'value',
+                        offset: '10',
+                        //控制y轴线是否显示
+                        axisLine: {
+                            show: false
+                        },
+                        // splitNumber: 4,
+                        min:'100',
+                        max:'120',
+                        // 控制网格线是否显示
+                        splitLine: {
+                            show: true,
+                            lineStyle: {
+                                width: '1',
+                                color: "#EEEEEE", //坐标线颜色	
+                            },
+                        },
+                        // 去除y轴上的刻度线
+                        axisTick: {
+                            show: false
+                        },
+                        //去除y轴上的刻度值
+                        axisLabel: {
+                            formatter: function (val) {
+                                return '￥' + val.toFixed(2);
+                            },
+                            color: '#A6A6A6',
+                        },
+
+                    }],
+                    series: [{
+                        type: 'line',
+                        symbolSize: 1, //拐点大小
+                        smooth: true,
+                        itemStyle: {
+                            normal: {
+                                borderColor: "#437CF7",
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 1, //折线宽度
+                                color: "#437CF7", //折线颜色	
+                            }
+                        },
+                        //设置折线区域填充颜色
+                        areaStyle: {
+                            normal: {
+                                color: '#E0EAFE'
+                            }
+                        },
+                        data:yData
+                    }]
+
+                });
+
+            }
+          }
+        })
+      </script>
+</body>
+
+</html>

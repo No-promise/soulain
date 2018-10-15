@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>我的关注</title>
+  <script src="../js/common/setDpr.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <style>
+    [v-cloak]{
+        display:none;
+    }
+    .followList {
+      padding: 0 .3rem;
+    }
+
+    .singleList {
+      height: 1.84rem;
+      border-bottom: .013333rem solid #eee;
+    }
+
+    .singleList img {
+      width: 1.08rem;
+      height: 1.08rem;
+      border-radius: 50%;
+      margin-right: .38rem;
+    }
+
+    .followName {
+      width: 4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: .36rem;
+      color: #333;
+    }
+
+    .followStatus {
+      width: 1.38rem;
+      height: .6rem;
+      line-height: .6rem;
+      font-size: .28rem;
+      color: #333;
+      border-radius: .6rem;
+      background: #ddd;
+    }
+    /*空状态下 样式  */
+    .blank_img {
+      width: 2.4rem;
+      height: 2.4rem;
+      margin-top: 2.26rem;
+    }
+    .noFollower {
+      font-size: .32rem;
+      color: #a6a6a6;
+      margin-top: .72rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div class="blank_status wrapper flex_jcc flex_alcc" v-cloak v-show="blankStatus">
+      <img class="blank_img" src="../img/linkUsAndInvite/follow@2x.png" alt="">
+      <p class="noFollower">暂无关注</p>
+    </div>
+    <ul class="followList wrapper ">
+      <li class="singleList row flex_jcsb flex_alcc" v-for='(item,index) in list' v-if="item.isFollow=='1'" v-cloak>
+        <img v-bind:src="item.avatar">
+        <div class="followName">
+          {{item.name}}
+        </div>
+        <div class="followStatus text_center" @click="cancelFollow(index)">
+          已关注
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script>
+  var app = new Vue({
+    el: '#root',
+    data: {
+      show: true,
+      list: [],
+      blankStatus:false
+    },
+    created() {
+
+    },
+    mounted() {
+      // window.JanesiApi.reqUrl = '//118.25.10.151:8803'
+      var that = this
+      that.getList()
+      that.exposure()
+       // 刷新关注 reloaded
+      window.JanesiBridge.commonNativeCallJS = function (res) {
+        if (res.action == 'reloaded') {
+          that.getList()
+        }
+      }
+      window.JanesiBridge.callNative('isLoaded', {})*
+      window.JanesiBridge.callNative('setTitle', {'title':'我的关注'})
+    },
+    methods: {
+      // 获取关注列表
+      getList() {
+        var that = this
+        window.JanesiApi.sendApi('/app/soulian/content/follow_list', 'post', {
+          // userId: '2136' 
+        }, function (res) {
+          
+          if(res.result==''||res.result==null){
+            that.blankStatus = true
+          }else{
+            that.blankStatus = false
+          }
+          that.list = res.result
+        })
+      },
+      // 取消关注
+      cancelFollow(index) {
+        var that = this
+        window.JanesiApi.sendApi('/app/soulian/content/cancel_fans_author', 'post', {
+          // userId:'2136',
+          authorId: that.list[index].authorId
+        }, function (e) {
+          if (e.code == 0) {
+            that.list[index].isFollow = '0'
+            that.getList()
+            console.log(that.list.length)
+            if(that.list.length==1){
+              that.blankStatus = true
+            }
+          }
+        })
+        // console.log(that.list[index].isFollow)
+      },
+      // 曝光埋点
+      exposure() {
+          // window.JanesiApi.reqUrl = "//118.25.10.151:8808"
+        var that = this
+        var myDate = new Date().getTime()
+        JanesiApi.trackApi('/log/spm', 'get', {
+            eventType: 'show',
+            eventTime: myDate,
+            end_type: 'h5',
+            url: window.location.href,
+            referrer: '',
+            h5_locaiton: 'followList'
+        }, function (res) {
+            console.log('ok')
+        })
+      }
+    }
+  })
+</script>
+
+</html>

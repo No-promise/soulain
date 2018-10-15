@@ -1,0 +1,220 @@
+html,body{
+    width:100%;
+    /* font-family: 'PingFang-SC' */
+    font-family:'PingFang SC','Microsoft YaHei','SimSun','Arial', sans-serif;
+  
+}
+#root{
+     width:100%;
+}
+[v-cloak]{
+    display:none;
+}
+.content{
+    width:100%;
+}
+.suanliTotal{
+    text-align: center;
+    height:2.2rem; 
+    padding-top:60px;
+    background: linear-gradient(to right, #4179F7, #65C1FF); 
+}
+.suanliTotal>h3{
+    color:#fff;
+    font-size: .28rem;
+    opacity: 0.45;
+    padding-top:0.2rem;
+    margin-bottom:.2rem;
+    font-weight: normal;
+}
+.suanliTotal>p{
+    color:#fff;
+    font-size:.72rem;
+    font-weight: bold;
+    
+    /* padding-bottom: 0.6rem; */
+}
+/* .tasks{
+    width:100%;
+    height:calc(100% - 2rem);
+    background-color: #fff;
+    border-radius: 15px 15px 0 0;
+} */
+.suanliIntro{
+    padding: 0.32rem 0.32rem  0.36rem 0.32rem;
+    background-color: #fff;
+    border-radius: 15px 15px 0 0;
+    margin-top: -0.2rem;
+}
+.suanliTitle{
+    color:#333333;
+    font-size: 0.28rem;
+    font-weight: 600;
+    margin-bottom: 0.32rem;
+}
+.suanliDetail{
+    width:100%;
+    font-size:0.28rem; 
+    line-height: 0.4rem;
+    background-color:rgba(238,238,238,0.33);
+    padding:0.28rem 0.22rem 0.34rem 0.32rem;
+    box-sizing: border-box;
+    border-radius: 0.18rem;
+}
+.suanliDetail p:nth-of-type(1){ 
+    color:#999999;
+}
+.yellowTip{
+    color:#F5A623;
+}
+.suanliDetail p:nth-of-type(2){
+    line-height: 0.4rem;    
+    color:#4179F7;
+    margin-top:0.1rem;
+}
+.suanliTask{
+    background-color: #fff;    
+}
+.taskTitle{
+    height:0.4rem;
+    color:#333333;
+    font-size: 0.28rem;
+    font-weight: 600;
+    padding:0 0.32rem;
+}
+.doTask  li{
+    box-sizing: border-box;
+    /* height:2.2rem; */
+    /* background-color: pink; */
+    padding-top: 0.45rem;
+    display: flex;
+    padding-left:0.32rem; 
+}
+.doTask  li:nth-last-of-type(1) .taskDetail::after{
+    height:0;  
+}
+.doTask  li:nth-of-type(1) .taskAward{
+    margin-bottom: 0.4rem;
+    white-space: nowrap;
+}
+.taskAward{
+    /* white-space: nowrap; */
+    line-height: 0.34rem;
+}
+.taskDetail{
+     /* width: calc(100% - 1rem);  */
+    width:90%;
+    display: flex;
+    justify-content: space-between;
+    padding:0 0.32rem; 
+    position: relative;
+}
+ .taskDetail::after{
+    content: '';
+    display: inline-block;
+    width: calc(100% - 0.32rem);
+    height:1px;
+    position: absolute;
+    bottom:0;
+    right:0;
+    background-color: #EEEEEE;
+} 
+.taskProgress{
+    width: 75%;
+}
+.taskImg{
+    /* width:90%; */
+    /* margin:0 0.32rem; */
+}
+.taskImg>img{
+    /* width:100%;
+    height:100%; */
+    width:0.36rem;
+    height:0.36rem; 
+    vertical-align: middle;
+}
+.taskName{
+    color:#A6A6A6;
+    font-size: 0.28rem;
+    line-height: 0.44rem;
+}
+.taskName span:nth-of-type(1){
+    color:#333333;
+    font-weight: bold;
+    font-size: 0.32rem;
+}
+.taskName span:nth-of-type(2){
+    color:#4B8DF9;
+    margin-left: 0.16rem;
+    margin-right: 0.1rem;
+}
+.taskAward{
+    color:#A6A6A6;
+    font-size:0.24rem;
+    margin-top:0.1rem;
+}
+.taskBtn{
+    width:1.32rem;
+    height:0.58rem;
+    line-height: 0.58rem;
+    text-align: center;
+    font-size:0.28rem;    
+    border:1px solid #4B8DF9;
+    border-radius: 0.3rem;
+    color:#4B8DF9;
+    box-sizing: border-box;
+}
+.taskFinish{
+    font-size:0.28rem;
+    color:#A6A6A6;
+    border:none;
+}
+.progressDetail{
+    margin-top:0.28rem;
+    margin-bottom: 0.48rem;
+}
+.progress{
+    display: inline-block;
+    width:2.36rem;
+    height:0.14rem;
+    background-color: #EEEEEE;
+    border-radius: 0.12rem;
+    margin-right:0.12rem;
+    position: relative;
+}
+.suanliCount{
+    display: inline-block;
+    color:#A6A6A6;
+    font-size: 0.24rem;
+    letter-spacing: 1px;
+    
+}
+.suanliCount span:nth-of-type(1){
+    color:#FFB90C;
+}
+.suanliCount span:nth-of-type(3){
+   margin-left: 0.12rem;
+}
+.changeProgress{
+    position: absolute;
+    top:0;
+    left:0;
+    /* width:1rem; */
+    height: 0.14rem;
+    border-radius: 0.12rem;
+    background:linear-gradient(to right, #FBD249, #F5A623);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

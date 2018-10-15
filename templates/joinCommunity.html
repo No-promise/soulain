@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>获取邀请码</title>
+  <script src="../js/common/setDpr.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+    html,
+    body {
+      width: 100%;
+      background: #fff;
+    }
+    #root {
+      margin: 0 .4rem;
+      box-sizing: border-box;
+    }
+    div {
+      color: #333;
+      font-size: .28rem;
+    }
+    .writeColor {
+      color: #fff;
+    }
+    /*弹框  */
+    .toast {
+        position: fixed;
+        top: 6rem;
+        left: 50%;
+        margin-left: -1.41rem;
+        width: 2.82rem;
+        height: .96rem;
+        line-height: .96rem;
+        font-size: .32rem;
+        color: #fff;
+        background: rgba(0, 0, 0, .8);
+        border-radius: .16rem;
+        z-index: 9;
+        display: none;
+    }
+    .banner {
+      margin: 0 .18rem;
+      box-sizing: border-box;
+    }
+    .banner img {
+      width: 100%;
+    }
+    .title_banner {
+      font-size: .48rem;
+      font-weight: bold;
+      margin: .22rem 0 .32rem 0;
+    }
+    .content_banner {
+      color: #A6A6A6;
+      margin-bottom: .32rem;
+    }
+    .content_banner span {
+      color: #0078FF;
+    }
+    /*分割  */
+    .division {
+      width: 100%;
+      height: 1px;
+      background: #EEEEEE;
+    }
+    /*流程  */
+    .title_model {
+      font-size: .36rem;
+      font-weight: bold;
+      margin: .38rem 0 .6rem 0;
+    }
+    .process li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: .4rem;
+    }
+    .circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: .12rem;
+      width: .44rem;
+      height: .44rem;
+      box-sizing: border-box;
+      background-color: rgba(65, 121, 247, .2);
+      border-radius: 50%;
+    }
+    .inCircle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: .32rem;
+      height: .32rem;
+      background-color: #4179F7;
+      border-radius: 50%;
+    }
+    .process li img {
+      width: .32rem;
+      height: .32rem;
+    }
+    .action,
+    .action_content {
+      line-height: .44rem;
+    }
+    .action_content {
+      color: #4179F7;
+    }
+    .btn_public {
+      width: 4rem;
+      height: .8rem;
+      line-height: .8rem;
+      border-radius: .8rem;
+      color: #4179F7;
+      border: 1px solid #4179F7;
+    }
+    /*社群  */
+    .listCommunity li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.2rem;
+    }
+    .step {
+      margin-left: .16rem;
+      width: .32rem;
+      height: .32rem;
+      border: 1px solid #333;
+      border-radius: 50%;
+    }
+    .qqNums {
+      margin: .46rem 0 .34rem 0;
+    }
+    .addIn {
+      width: 1.16rem;
+      height: .48rem;
+      line-height: .48rem;
+      color: #4179F7;
+      border-radius: .48rem;
+      border: 1px solid #4179F7;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <!--弹框  -->
+    <div class="toast text_center">
+       复制成功
+    </div>
+    <div class="banner wrapper flex_alcc">
+      <img src="../icon/InviteAndCommunity/undraw_work_chat_erdt@2x.jpg">
+      <div class="title_banner">
+        加入社群
+      </div>
+      <div class="content_banner">
+        这里有<span>21188</span>个小伙伴和你在一起
+      </div>
+    </div>
+    <!--分割  -->
+    <div class="division"></div>
+    <div class="PublicNumber wrapper ">
+      <div class="title_model">
+        微信公众号
+      </div>
+      <ul class=" process row flex_jcsb flex_alcc ">
+        <li>
+          <div class="circle ">
+            <div class="inCircle writeColor ">
+              1
+            </div>
+          </div>
+          <div class="action">
+            搜索 
+          </div>
+          <div class="action_content">
+            “ 布谷阅读 ”
+          </div>
+        </li>
+        <li>
+          <img src="../icon/InviteAndCommunity/Group 4@2x.jpg">
+        </li>
+        <li>
+          <div class="circle ">
+            <div class="inCircle writeColor ">
+              2
+            </div>
+          </div>
+          <div class="action">
+            关注
+          </div>
+          <div class="action">
+            公众号
+          </div>
+        </li>
+        <li>
+          <img src="../icon/InviteAndCommunity/Group 4@2x.jpg">
+        </li>
+        <li>
+          <div class="circle ">
+            <div class="inCircle writeColor ">
+              3
+            </div>
+          </div>
+          <div class="action">
+            输入
+          </div>
+          <div class="action_content">
+            “ 邀请码 ”
+          </div>
+        </li>
+      </ul>
+      <div class="btn_public text_center flex_asc" @click="copyAndFollow()">
+        复制公众号并一键关注
+      </div>
+    </div>
+    <!--社群  -->
+    <div class="qqCommunity">
+      <div class="title_model">
+        QQ社群
+      </div>
+      <ul class="listCommunity row flex_jcsa  ">
+        <li>
+          <div class="topCon row">
+            QQ群
+            <div class="step row flex_jcc flex_alcc ">
+              1
+            </div>
+          </div>
+          <div class="qqNums">
+            829887725
+          </div>
+          <div class="addIn text_center"  @click="joinOne()">
+            加入
+          </div>
+        </li>
+        <li>
+          <div class="topCon row">
+            QQ群
+            <div class="step row flex_jcc flex_alcc ">
+              2
+            </div>
+          </div>
+          <div class="qqNums">
+            894543493
+          </div>
+          <div class="addIn text_center" @click="joinTwo()">
+            加入
+          </div>
+        </li>
+        <!-- <li>
+          <div class="topCon row">
+            QQ群
+            <div class="step row flex_jcc flex_alcc ">
+              3
+            </div>
+          </div>
+          <div class="qqNums">
+            942538129
+          </div>
+          <div class="addIn text_center">
+            加入
+          </div>
+        </li> -->
+      </ul>
+    </div>
+  </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script>
+  var app = new Vue({
+    el: '#root',
+    data: {
+
+    },
+    created() {
+
+    },
+    mounted() {
+      var that = this
+
+      window.JanesiBridge.callNative('isLoaded', {})
+      // window.JanesiBridge.callNative('setTitle', {'title':'获取邀请码'})
+    },
+    methods: {
+      // 复制公众号
+      copyAndFollow(){
+          var action_content = document.querySelector('.action_content')
+          var text1 = action_content.innerHTML
+          console.log(text1)
+          if (text1.length < 1) return
+          var oInput = document.createElement('input')
+          oInput.value = text1
+          oInput.setAttribute('readOnly', 'readOnly')
+          document.body.appendChild(oInput)
+          oInput.select() // 选择对象
+          oInput.setSelectionRange(0, oInput.value.length)
+          document.execCommand("Copy") // 执行浏览器复制命令
+          oInput.className = 'oInput'
+          oInput.style.display = 'none'
+          document.querySelector('.toast').style.display = 'block'
+          setTimeout(function() {
+              document.querySelector('.toast').style.display = 'none'
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'thirdParty':'wechat'
+              });
+
+          }, 500);
+      },
+      //  加入
+      joinOne(){
+          if(window.JanesiApi.isAndroid){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dm-afMCal0zRcSxNmuMhlycvJi8BceTT8'
+              });
+          }else if(window.JanesiApi.isiOS){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=829887725&key=cf492e93c49676b51ae07b3a15aeb7d340f271aadb0d2043093da16a0a6a7ea9&card_type=group&source=external'
+              });
+          }
+      },
+      joinTwo(){
+          if(window.JanesiApi.isAndroid){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3DjkwBJNQcQ34yZQE9Aty4Xy5J93dxcKrw'
+              });
+          }else if(window.JanesiApi.isiOS){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=829887725&key=d0f6b337173ab98a2e8b439afe7e7dfcdf76773120b5db93d17b907440ba48f3&card_type=group&source=external'
+              });
+          }
+      }
+    }
+  })
+
+</script>
+
+</html>

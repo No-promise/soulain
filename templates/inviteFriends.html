@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="../js/common/setDpr.js"></script>
+    <link rel="stylesheet" href="../css/common/common.css">
+     <script src="https://cdn.polyfill.io/v1/polyfill.min.js"></script> 
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: url('../img/linkUsAndInvite/background @2x.png') no-repeat;
+            background-size: cover;
+            display: none;
+        }
+        #root {
+            width: 100%;
+            height: 100%;
+            padding: .8rem .72rem;
+            box-sizing: border-box;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        .toast {
+            position: fixed;
+            top: 6.08rem;
+            left: 50%;
+            margin-left: -1.41rem;
+            width: 2.82rem;
+            height: .96rem;
+            line-height: .96rem;
+            font-size: .32rem;
+            color: #fff;
+            background: rgba(0, 0, 0, .8);
+            border-radius: .16rem;
+            display: none;
+        }
+        .alreadyInvite {
+            position: absolute;
+            top: 1.28rem;
+            right: 0;
+            width: 1.6rem;
+            height: .52rem;
+            line-height: .52rem;
+            text-align: center;
+            background: linear-gradient(to right, rgba(65, 121, 247, .43), rgba(101, 193, 255, .43));
+            color: rgba(255, 255, 255, 1);
+            border-radius: 1rem 0 0 1rem;
+        }
+        .content {
+            width: 100%;
+        }
+        .fontTitle {
+            margin: .4rem 0 .1rem 0;
+            height: .76rem;
+        }
+        .tipFont {
+            margin-bottom: .44rem;
+            font-size: .28rem;
+            color: rgba(255, 255, 255, .6);
+        }
+        .inviteContent {
+            width: 100%;
+            height: 8.06rem;
+            background: url('../img/linkUsAndInvite/白底@2x.png') no-repeat;
+            background-size: cover;
+        }
+        .inviteTitle {
+            margin: .58rem 0 .1rem 0;
+            font-size: .28rem;
+            color: #666;
+        }
+        .myInvite {
+            font-weight: bold;
+            font-size: .96rem;
+            line-height: 1.16rem;
+            background: linear-gradient(to right, #4179F7, #65C1FF);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .copyInviteNum {
+            width: 2.02rem;
+            height: .6rem;
+            margin: .3rem 0 .2rem 0;
+            line-height: .6rem;
+            font-size: .28rem;
+            border-radius: .6rem;
+            background: linear-gradient(to right, #4179F7, #65C1FF);
+            color: #fff;
+        }
+        .remainTimes {
+            font-weight: 600;
+            font-size: .28rem;
+            color: #4179F7;
+            margin-bottom: .1rem;
+        }
+        .totalTimes {
+            width: 2.6rem;
+            height: .36rem;
+            /* background-color: #E5EEFF;
+            text-align: center;
+            font-size: .24rem;
+            color: #6997FF; */
+        }
+        /*二维码  */
+        #qrCode {
+            margin: .6rem 0 .16rem 0;
+            width: 2.34rem;
+            height: 2.34rem;
+        }
+        .bottomTip {
+            font-size: .28rem;
+            color: #999;
+        }
+        .tipshare {
+            margin: .54rem 0 .24rem 0;
+            font-size: .28rem;
+            color: #fff;
+        }
+        .goShare {
+            width: 2.54rem;
+        }
+        .goShare img {
+            width: .8rem;
+            height: .8rem;
+        }
+        .blank {
+            height: .5rem;
+        }
+</style>
+ <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>   -->
+</head>
+
+<body>
+    <div id="root">
+        <div class="toast text_center">
+            复制成功
+        </div>
+        <div class="alreadyInvite" @click="alreadyInvite()">
+            已邀请好友
+        </div>
+        <div class="content wrapper  flex_alcc">
+            <img class="fontTitle" src="../img/linkUsAndInvite/搜链@2x.png" alt="">
+            <div class="tipFont">基于区块链技术的资讯产品</div>
+            <!--白底  -->
+            <div class="inviteContent wrapper  flex_alcc">
+                <div class="inviteTitle">
+                    我的邀请码
+                </div>
+                <div class="myInvite" v-cloak>
+                     {{userData.inviteCode}} 
+                </div>
+                <div class="copyInviteNum text_center" @click='copyText()'>
+                    复制
+                </div>
+                <div class="remainTimes">
+                    今日剩余邀请次数 <span>{{userData.surplus}}</span>次
+                </div>
+                <div class="totalTimes" >
+                     <!-- 我的邀请码总次数<span>{{userData.inviteLimit}}</span>次  -->
+                </div>
+                <!--二维码  -->
+                <div id="qrCode">
+
+                </div>
+
+                <div class="bottomTip">
+                    扫码下载布谷头条APP
+                </div>
+            </div>
+            <!--底部分享  -->
+            <div class="tipshare">
+                分享至
+            </div>
+            <div class="goShare row flex_jcsb">
+                <img src="../img/linkUsAndInvite/icon_mine_share_weixin@2x.png" @click="wechatShare()">
+                <img src="../img/linkUsAndInvite/icon_mine_share_pengyou@2x.png" @click="friendShare()">
+            </div>
+            <div class="blank"></div>
+        </div>
+
+    </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script type="text/javascript" src="https://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#root',
+        data: {
+            userData: {
+                inviteCode: '',
+                surplus: '',
+                inviteLimit: ''
+            },
+            isActive: false
+        },
+        created() {
+
+        },
+        mounted() {
+            // window.JanesiApi.reqUrl = '//118.25.10.151:8803'
+            // window.JanesiApi.reqUrl = 'http://10.10.10.81:8803'
+            var that = this
+            that.getData()
+            that.judgmentHeight()
+            that.show()
+            that.exposure()
+            window.JanesiBridge.callNative('isLoaded', {})
+
+        },
+        methods: {
+            show() {
+                document.querySelector('body').style.display = "block"
+                document.querySelector('html').style.display = "block"
+            },
+            // 判断手机高度
+            judgmentHeight(){
+                var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                if(clientHeight>736){
+                    var tipshare = document.querySelector('.tipshare')
+                    var fontTitle = document.querySelector('.fontTitle');
+                    var alreadyInvite = document.querySelector('.alreadyInvite')
+                    tipshare.style.cssText = 'margin-top:50px'
+                    fontTitle.style.cssText = 'margin-top:50px'
+                    alreadyInvite.style.cssText = 'top:90px'
+                }
+            },
+            // 获取页面数据
+            getData() {
+                var that = this
+                window.JanesiApi.sendApi('/app/soulian/user/invite', 'post', {
+                    // userId:'1520'
+                }, function (res) {
+                    that.userData = res.result
+                    var link = res.result.link
+                    // var link = 'https://yun1.janesi.net/janesi-solian/solian-2.1/templates/download.html'
+                    that.creatQRCode(link)
+                })
+            },
+            // 生成二维码
+            creatQRCode(link) {
+                var that = this
+                var qrCodeH = document.querySelector('#qrCode')
+                var qrcode = new QRCode('qrCode', {
+                    width: qrCodeH.clientHeight,
+                    height: qrCodeH.clientHeight // 高度
+                })
+                qrcode.makeCode(link)
+                // console.log(qrcode)
+            },
+            // 复制
+            copyText() {
+                var myInvite = document.querySelector('.myInvite')
+                var text1 = myInvite.innerHTML
+                console.log(text1)
+                if (text1.length < 1) return
+                var oInput = document.createElement('input')
+                oInput.value = text1
+                oInput.setAttribute('readOnly', 'readOnly')
+                document.body.appendChild(oInput)
+                oInput.select() // 选择对象
+                oInput.setSelectionRange(0, oInput.value.length)
+                document.execCommand("Copy") // 执行浏览器复制命令
+                oInput.className = 'oInput'
+                oInput.style.display = 'none'
+                document.querySelector('.toast').style.display = 'block'
+                setTimeout(function() {
+                    document.querySelector('.toast').style.display = 'none'
+                }, 500);
+            },
+            // 已邀请好友
+            alreadyInvite() {
+                var urlBase = 'https://yun1.janesi.net'
+                var alreadyInvitePage = { 'url': urlBase + '/janesi-solian/solian-2.1.1/templates/invited_record.html' }
+
+                console.log(alreadyInvitePage)
+                window.JanesiBridge.callNative('open', alreadyInvitePage)
+            },
+            // 微信分享
+            wechatShare() {
+                window.JanesiBridge.callNative('openThirdPartShare', {
+                    'pathWay': 'wechatSession',
+                    'shareType': 'INVITE'
+                })
+            },
+            // 朋友圈分享
+            friendShare() {
+                window.JanesiBridge.callNative('openThirdPartShare', {
+                    'pathWay': 'wechatTimeLine',
+                    'shareType': 'INVITE'
+                })
+            },
+            // 曝光埋点
+            exposure() {
+                // window.JanesiApi.reqUrl = "//118.25.10.151:8808"
+                var that = this
+                var myDate = new Date().getTime()
+                JanesiApi.trackApi('/log/spm', 'get', {
+                    eventType: 'show',
+                    eventTime: myDate,
+                    end_type: 'h5',
+                    url: window.location.href,
+                    referrer: '',
+                    h5_locaiton: 'inviteFriend'
+                }, function (res) {
+                    console.log('ok')
+                })
+            }
+
+
+        }
+    })
+
+</script>
+
+</html>

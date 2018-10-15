@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title>交易记录</title>
+		<script src="../js/rems.js"></script>
+		<style>
+			html, body, ul, li, img, p{
+				margin: 0;
+				padding: 0;
+			}
+			.list::-webkit-scrollbar{
+				display:none;
+			}
+			.list{
+				width: 100%;
+				padding: 0 0.3rem;
+				box-sizing: border-box;
+			}
+			.list>li{
+				width: 100%;
+				list-style-type:none;
+				padding: 0.3rem 0;
+				box-sizing: border-box;
+				border-bottom:0.01rem solid #eee;
+			}
+			.list>li>.top{
+				height: 0.55rem;
+				line-height: 0.55rem;
+				width: 100%;
+				font-size: 0.32rem;
+				color: #333;
+				display: flex;
+				justify-content: space-between;
+			}
+			.list>li>.top>div:last-child{
+				color: #000;
+			}
+			.list>li>.bottom{
+				height: 0.45rem;
+				line-height: 0.45rem;
+				width: 100%;
+				font-size: 0.24rem;
+				color: #797979;
+			}
+			.mid{
+				line-height: 0.45rem;
+				font-size: 0.28rem;
+				max-width: 65%;
+			}
+			.list>li .proceed{
+				color:#999;
+			}
+			.list>li .success{
+				color:#42C233;
+			}
+			.list>li .error{
+				color:#FF0937;
+			}
+			.hit{
+				text-align: center;
+				font-size: 0.28rem;
+				color: #999;
+			}
+			.hit>img{
+				display: block;
+				width: 2.4rem;
+				margin: 2.5rem auto 0.8rem;
+			}
+			.loding{
+				line-height: 1rem;
+				text-align: center;
+				font-size: 0.28rem;
+				color: #999;
+			}
+			[v-cloak] {
+				display:none !important;
+			}
+		</style>
+	</head>
+
+	<body id="body" style="visibility: hidden">
+		<div id="root">
+			<ul class="list">
+				<li v-for="item in dataInit" v-cloak>
+					<div class="top">
+						<div>卖出 谷粒{{item.slk}}</div>
+						<div><span v-text="item.amount"></span>元</div>
+					</div>
+					<div class="mid">
+						<div v-if="item.status == '0'" class="proceed">进行中</div>
+						<div v-if="item.status == '1'" class="success">交易成功</div>
+						<div v-if="item.status == '-1'" class="error" v-text="item.msg"></div>
+					</div>
+					<div class="bottom" v-text="item.timestamp"></div>
+				</li>
+			</ul>
+			<div class="hit" v-if="dataShow">
+				<img src="../img/Rectangle%203@2x.png" alt="">
+				<span>暂无交易记录</span>
+			</div>
+			<div class="loding" v-if="loadShow">没有更多了！</div>
+		</div>
+		<script src="../js/common/zepto.min.js"></script>
+		<script src="../js/common/JanesiBridges.js"></script>
+		<script src="../js/common/vue.js"></script>
+		<script>
+            new Vue({
+                el: '#root',
+                data: {
+                    dataShow:true,
+                    loadShow:false,
+                    invited_flag:true,
+					pageNo:'0',
+					dataInit:[]
+				},
+                created: function () {
+					this.trading_list ();
+					this.setTitle ()
+                },
+                mounted: function () {
+					window.addEventListener('scroll',this.scroll);
+                    window.JanesiBridge.callNative('isLoaded', {});
+                    this.exposure()
+                },
+				watch: {
+
+				},
+                methods: {
+                    exposure() {
+                        // window.JanesiApi.reqUrl = "http://118.25.10.151:8808/log/spm"
+                        var myDate = new Date().getTime();
+                        JanesiApi.trackApi('/log/spm', 'get', {
+                            eventType: 'show',
+                            eventTime: myDate,
+                            end_type: 'h5',
+                            url: window.location.href,
+                            referrer: '',
+                            h5_locaiton: 'trading_record'
+                        }, function (res) {
+                            console.log('ok')
+                        })
+                    },
+                    setTitle() {
+                        window.JanesiBridge.callNative('setTitle', {'title': '交易记录'})
+                    },
+                    trading_list () {
+                        var _this = this;
+                        JanesiApi.sendApi('/app/soulian/trade/list', 'post', {
+                            // userId:'1329',
+                            pageNo:_this.pageNo
+                        }, function (res) {
+                            console.log(res.result);
+                            if(res.result.length != '0'){
+                                _this.dataShow = !_this.dataShow;
+                                _this.dataInit = res.result;
+                            }
+                        })
+                    },
+                    scroll(){
+                        var _this = this;
+                        var scrollTop = $(window).scrollTop();
+                        var scrollHeight = $(document).height();
+                        var windowHeight = $(window).height();
+                        if(windowHeight + scrollTop >= scrollHeight){
+                            _this.pageNo = parseInt(_this.pageNo) + 1;
+                            if(_this.invited_flag){
+                                JanesiApi.sendApi('/app/soulian/trade/list', 'post', {
+                                    pageNo: _this.pageNo
+                                }, function (res) {
+                                    console.log(res.result);
+                                    if(res.result.length == '0'){
+                                        _this.loadShow = !_this.loadShow;
+                                        _this.invited_flag = !_this.invited_flag;
+                                    }else{
+                                        _this.dataInit = _this.dataInit.concat(res.result);
+                                    }
+                                })
+							}
+
+						}
+					}
+                }
+            })
+        </script>
+	</body>
+
+</html>

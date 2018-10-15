@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+     <script src="../js/common/setDpr.js"></script> 
+     <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <title></title>
+</head>
+
+<body>
+    <!--内容头部  -->
+    <div class="banner row flex_jcsb flex_alcc">
+        <img class="homeAvator" src="../img/articleAndMv/16.jpg" alt="">
+        <div class="fansAndAuthor wrapper flex_jcsb">
+            <div class="home_authorName">
+                热点资讯
+            </div>
+            <div class="fans">
+                <span>粉丝</span>
+                <span>20</span>
+            </div>
+        </div>
+        <div id="attentionStatus" class="text_center" isOrNot='0'>
+            关注
+        </div>
+    </div>
+    
+    <ul class="recommend" id="list">
+        
+    </ul>
+    <script src="../js/common/zepto.min.js"></script>
+    <script src="../js/common/JanesiBridges.js"></script>
+    <script src="../js/common/echo.js"></script>
+    <script src="../js/list.js"></script>
+    <script src="../js/contentHomePage.js"></script>
+</body>
+</html>

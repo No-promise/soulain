@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <script src="../js/flexible.js"></script>
+    <link rel="stylesheet" href="../css/sugar.css">
+    <title>糖果活动</title>
+</head>
+<body>
+<section  class="store">
+    <img class="qiu" src="../img/invalidName@2xqiu.png" alt="">
+    <p class="top"><img src="../img/sugar.png" alt=""></p>
+    <ul>
+        <li class="activity">
+            <img src="../img/back_sugar.png" alt="">
+            <div class="hint">活动时间：<span>2018 9.23-10.23</span> <span style="color: skyblue"> 即将开启</span></div>
+        </li>
+        <li class="activity">
+            <img src="../img/bt9.png" alt="">
+            <p class="time">限时活动</p>
+            <p class="open">活动即将开启，敬请期待！</p>
+        </li>
+    </ul>
+</section>
+<script src="../js/common/JanesiBridges.js"></script>
+<script type="text/javascript">
+    window.onload = function(){
+        // 通知原生关闭托底图片
+        window.JanesiBridge.callNative('isLoaded', {});
+        var myDate = new Date().getTime();
+        JanesiApi.trackApi('/log/spm', 'get', {
+            eventType: 'show',
+            eventTime: myDate,
+            end_type: 'h5',
+            url: window.location.href,
+            referrer: '',
+            h5_locaiton: 'sugar'
+        }, function (res) {
+            console.log('ok')
+        })
+    }
+</script>
+</body>
+</html>

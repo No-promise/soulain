@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>联系我们</title>
+  <script src="../js/common/setDpr.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <style>
+    .toast {
+      position: fixed;
+      top: 4.08rem;
+      left: 50%;
+      margin-left: -1.41rem;
+      width: 2.82rem;
+      height: .96rem;
+      line-height: .96rem;
+      font-size: .32rem;
+      color: #fff;
+      background: rgba(0, 0, 0, .8);
+      border-radius: .16rem;
+      display: none;
+    }
+    .topContent {
+      width: 100%;
+      display: block;
+    }
+    .linkMain {
+      padding: 0 .6rem;
+      box-sizing: border-box;
+    }
+    .linkList {
+      padding-bottom: .4rem;
+      border-bottom: .013333rem solid #eee;
+    }
+    .linkMain>li:last-child {
+      border-bottom: none;
+    }
+    #link_title {
+      margin: .5rem 0 .34rem 0;
+      font-size: .32rem;
+      font-weight: 600;
+    }
+    .linkList p {
+      font-size: .28rem;
+      margin-bottom: .06rem;
+      color: #666;
+    }
+    .copy {
+      width: 1.1rem;
+      height: 0.42rem;
+      font-size: .24rem;
+      color: #4A90E2;
+      varter-spacing: -.32px;
+      text-align: center;
+      border: 1px solid #4A90E2;
+      border-radius: .06rem;
+      line-height: .42rem;
+    }
+    .linkList p span:nth-of-type(1) {
+      margin-right: .66rem;
+    }
+    .linkList p span:nth-of-type(2) {
+      margin-right: .3rem;
+    }
+    .blankLeft {
+      margin-left: .2rem;
+    }
+    .copyText p span:nth-of-type(1) {
+      margin-right: .3rem;
+    }
+    .copyright {
+      display: wrap;
+      text-align: center;
+      font-size: .22rem;
+      color: #666;
+      width: 100%;
+      position: absolute;
+      bottom: .04rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div class="toast text_center">
+      复制成功
+    </div>
+    <img class="topContent" src="../img/linkUsAndInvite/icon_mine_contact_us@2x.png" alt="">
+    <ul class="linkMain wrapper">
+      <li class="linkList">
+        <div id="link_title">联系客服：</div>
+        <p>
+          <span>Q&nbsp;</span>
+          <span> Q</span>：
+          <span>1755162434</span>
+        </p>
+        <p><span>微</span>
+          <span>信</span>:
+          <span class="blankLeft">kdttxzs</span>
+        </p>
+        <div class="copyText row flex_jcsb">
+          <p>
+            <span>用户QQ群</span>：
+            <span id="qqText">894543493</span>
+          </p>
+          <div class="copy" @click="copyText()">
+            复制
+          </div>
+        </div>
+      </li>
+      <li class="linkList">
+        <p id="link_title">广告合作：</p>
+        <p><span>微</span>
+          <span>信</span>:
+          <span class="blankLeft">540717843</span></p>
+        <p>
+          <span>Q&nbsp;</span>
+          <span>Q</span>：
+          <span>540717843</span>
+        </p>
+        <p>
+          <span>邮</span>
+          <span>箱</span>:
+          <span class="blankLeft">wbz@janesi.com</span>
+        </p>
+      </li>
+      <li class="linkList">
+        <p id="link_title">商务合作：</p>
+        <p>
+          <span>Q&nbsp;</span>
+          <span>Q</span>：
+          <span>1610434687</span>
+        </p>
+        <p>
+          <span>邮</span>
+          <span>箱</span>:
+          <span class="blankLeft">lxy@janesi.com</span>
+        </p>
+      </li>
+    </ul>
+    <div class="copyright ">
+      <div class="company">
+         简思科技 版权所有
+      </div>
+        <div class="productTime">
+          Copyright © 2017~2018 浙ICP备18001939号-1
+        </div>
+    </div>
+  </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script>
+  var app = new Vue({
+    el: '#root',
+    data() {
+      return {}
+    },
+    created() {
+
+    },
+    mounted() {
+      this.exposure()
+    },
+    methods: {
+      copyText() {
+        var qqText = document.querySelector('#qqText')
+        var text1 = qqText.innerHTML
+        if (text1.length < 1) return
+        var oInput = document.createElement('input')
+        oInput.value = text1
+        oInput.setAttribute('readOnly', 'readOnly')
+        document.body.appendChild(oInput)
+        oInput.select() // 选择对象
+        oInput.setSelectionRange(0, oInput.value.length)
+        document.execCommand("Copy") // 执行浏览器复制命令
+        oInput.className = 'oInput'
+        oInput.style.display = 'none'
+        document.querySelector('.toast').style.display = 'block'
+        setTimeout(() => {
+          document.querySelector('.toast').style.display = 'none'
+        }, 500)
+
+      },
+      // 曝光埋点
+      exposure() {
+        // window.JanesiApi.reqUrl = "//118.25.10.151:8808"
+        var that = this
+        var myDate = new Date().getTime()
+        JanesiApi.trackApi('/log/spm', 'get', {
+            eventType: 'show',
+            eventTime: myDate,
+            end_type: 'h5',
+            url: window.location.href,
+            referrer: '',
+            h5_locaiton: 'linkUs'
+          }, function (res) {
+            console.log('ok')
+        })
+      }
+    }
+  })
+</script>
+
+</html>

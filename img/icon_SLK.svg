@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="34px" viewBox="0 0 24 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/SLK</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="-2.48949813e-15%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFDF18" offset="0%"></stop>
+            <stop stop-color="#FFB10A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFE85B" offset="0%"></stop>
+            <stop stop-color="#FFCD2E" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon" transform="translate(-555.000000, -254.000000)">
+            <g id="icon/SLK" transform="translate(555.000000, 254.000000)">
+                <g id="Group-5-Copy-6">
+                    <g id="logo（黄色）" fill-rule="nonzero">
+                        <path d="M11.6952025,33.3774979 L0.816880352,27.3732292 C0.645541253,27.2786589 0.538934821,27.096938 0.538934821,26.8994443 L0.538934821,21.1527004 C0.538934821,20.854642 0.777716288,20.6130179 1.07226815,20.6130179 C1.16150495,20.6130179 1.24931537,20.6356755 1.32765596,20.6789155 L11.6952025,26.4012626 C12.0135785,26.5769896 12.3983778,26.5769896 12.7167538,26.4012626 L23.8730214,20.2435824 L23.8730214,27.2198177 L12.7167538,33.3774979 C12.3983778,33.5532249 12.0135785,33.5532249 11.6952025,33.3774979 Z M11.6786143,7.11641409 L0.522346625,13.2740943 L0.522346625,6.29785897 L11.6786143,0.140178758 C11.9969903,-0.0355482487 12.3817895,-0.0355482487 12.7001655,0.140178758 L23.5784877,6.14444751 C23.7498268,6.23901776 23.8564333,6.42073869 23.8564333,6.61823238 L23.8564333,12.3649763 C23.8564333,12.6630347 23.6176518,12.9046588 23.3230999,12.9046588 C23.2338631,12.9046588 23.1460527,12.8820011 23.0677121,12.8387612 L12.7001655,7.11641409 C12.3817895,6.94068709 11.9969903,6.94068709 11.6786143,7.11641409 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+                        <polygon id="Rectangle-39" fill="url(#linearGradient-2)" transform="translate(12.205978, 16.745769) rotate(180.000000) translate(-12.205978, -16.745769) " points="0.538934827 6.28141651 23.8730214 20.2338871 23.8730214 27.2101224 0.538934827 13.2576518"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

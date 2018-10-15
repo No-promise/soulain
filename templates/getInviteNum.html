@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>获取邀请码</title>
+  <script src="../js/common/setDpr.js"></script>
+  <link rel="stylesheet" href="../css/common/common.css">
+  <style>
+    [v-cloak]{
+        display:none;
+    }
+    html,body{
+      width: 100%;
+      background: #F3F3F3;
+    }
+    #root {
+      margin: .2rem .2rem .6rem .2rem;
+      
+      box-sizing: border-box;
+    }
+    div {
+      color: #333;
+      font-size: .32rem;
+    }
+    .writeColor {
+      color: #fff;
+    }
+    /*弹框  */
+    .toast {
+        position: fixed;
+        top: 6rem;
+        left: 50%;
+        margin-left: -1.41rem;
+        width: 2.82rem;
+        height: .96rem;
+        line-height: .96rem;
+        font-size: .32rem;
+        color: #fff;
+        background: rgba(0, 0, 0, .8);
+        border-radius: .16rem;
+        z-index: 9;
+        display: none;
+    }
+    .wechatGet,
+    .qqRequire,
+    .textIntroduce {
+      padding: .4rem;
+      background: #fff;
+      margin-bottom: .2rem;
+    }
+    .title_get {
+      position: relative;
+      font-size: .36rem;
+      font-weight: bold;
+    }
+    .title_get::after {
+      content: '';
+      position: absolute;
+      top: .1rem;
+      left: -.1rem;
+      width: .06rem;
+      height: .32rem;
+      background: #4179F7;
+    }
+    .content_get {
+      margin: .4rem 0 .6rem 0;
+      font-size: .32rem;
+    }
+    .content_get span {
+      color: #4179F7;
+    }
+    .btn_get {
+      width: 4rem;
+      height: .8rem;
+      line-height: .8rem;
+      font-size: .28rem;
+      border-radius: .8rem;
+      background: linear-gradient(to right,#4179F7,#65C1FF);
+    }
+    /*qq列表  */
+    .qqRequire .title_get {
+      margin-bottom: .2rem;
+    }
+    .qqList {
+      margin: .32rem 0;
+    }
+    .qqIcon {
+      width: .48rem;
+      height: .48rem;
+      margin-right: .14rem;
+    }
+    .qqGroup {
+      line-height: .38rem;
+    }
+    .qqGroup div {
+      width: .36rem;
+      height: .36rem;
+      text-align: center;
+      border: 1px solid #333;
+      border-radius: 50%;
+      font-size: .28rem;
+    }
+    .join {
+      width: 1.44rem;
+      height: .6rem;
+      line-height: .6rem;
+      border-radius: .6rem;
+      font-size: .28rem;
+      background: linear-gradient(to right,#4179F7,#65C1FF);
+    }
+    /*为什么需要邀请码？  */
+    .textIntroduce .title_get {
+      margin-bottom: .2rem;
+    }
+    .introduceContent {
+      line-height: .4rem;
+      letter-spacing: .03rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <!--弹框  -->
+    <div class="toast text_center">
+       复制成功
+    </div>
+    <div class="wechatGet wrapper ">
+      <div class="title_get">
+        微信获取
+      </div>
+      <div class="content_get">
+        关注
+        <span>"</span>
+        <span id="publicNum">布谷阅读</span>
+        <span>"</span>
+        后输入
+        <span>"邀请码"</span>即可获取
+      </div>
+      <div class="btn_get text_center flex_asc writeColor" @click="copyAndFollow()">
+        复制公众号并一键关注
+      </div>
+    </div>
+    <div class="qqRequire">
+      <div class="title_get">
+        QQ获取
+      </div>
+      <!--qq列表  -->
+      <ul class="content_require wrapper flex_jcsa ">
+        <li class="qqList row flex_jcsb flex_alcc ">
+          <div class="listLeft row flex_alcc ">
+            <img class="qqIcon" src="../icon/InviteAndCommunity/qq copy@2x.jpg">
+            <div class="qqGroup row">
+              QQ群&nbsp;<div>1</div>
+            </div>
+          </div>
+
+            <div class="QQNums">
+              829887725
+            </div>
+            <div class="join writeColor text_center" @click="joinOne()">
+              加入
+            </div>
+        </li>
+        <li class="qqList row flex_jcsb flex_alcc ">
+          <div class="listLeft row flex_alcc ">
+            <img class="qqIcon" src="../icon/InviteAndCommunity/qq copy@2x.jpg">
+            <div class="qqGroup row">
+              QQ群&nbsp;<div>2</div>
+            </div>
+          </div>
+            <div class="QQNums">
+              894543493
+            </div>
+            <div class="join writeColor text_center " @click="joinTwo()" >
+              加入
+            </div>
+        </li>
+        <!-- <li class="qqList row flex_jcsb flex_alcc ">
+          <div class="listLeft row flex_alcc ">
+            <img class="qqIcon" src="../icon/InviteAndCommunity/qq copy@2x.jpg">
+            <div class="qqGroup row">
+              QQ群&nbsp;<div>3</div>
+            </div>
+          </div>
+            <div class="QQNums">
+              942538129
+            </div>
+            <div class="join writeColor text_center " >
+              加入
+            </div>
+        </li> -->
+      </ul>
+    </div>
+    <div class="textIntroduce">
+      <div class="title_get">
+        为什么需要邀请码？
+      </div>
+      <div class="introduceContent">
+        布谷头条为在前期提升产品体验，特开放部分体验用户名额，体验用户注册可获得价值50元的0.5个谷粒，并可以在布谷头条通过看文章，提建议等方式赚取更多的谷粒，500w奖励金发完为止，越早注册奖励越多；
+      </div>
+      <div class="introduceContent">
+        后期平台会慢慢开放注册通道，让更多的用户共享信息红利；
+      </div>
+    </div>
+  </div>
+</body>
+<script src="../js/common/vue.js"></script>
+<script src="../js/common/zepto.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script>
+var app = new Vue({
+    el: '#root',
+    data: {
+      
+    },
+    created() {
+
+    },
+    mounted() {
+      var that = this
+      
+      window.JanesiBridge.callNative('isLoaded', {})
+      window.JanesiBridge.callNative('setTitle', {'title':'获取邀请码'})
+    },
+    methods: {
+      // 复制公众号
+      copyAndFollow(){
+          var publicNum = document.querySelector('#publicNum')
+          var text1 = publicNum.innerHTML
+          console.log(text1)
+          if (text1.length < 1) return
+          var oInput = document.createElement('input')
+          oInput.value = text1
+          oInput.setAttribute('readOnly', 'readOnly')
+          document.body.appendChild(oInput)
+          oInput.select() // 选择对象
+          oInput.setSelectionRange(0, oInput.value.length)
+          document.execCommand("Copy") // 执行浏览器复制命令
+          oInput.className = 'oInput'
+          oInput.style.display = 'none'
+          document.querySelector('.toast').style.display = 'block'
+          setTimeout(function() {
+              document.querySelector('.toast').style.display = 'none'
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'thirdParty':'wechat'
+              });
+
+          }, 500);
+      },
+      //  加入
+      joinOne(){
+        if(window.JanesiApi.isAndroid){
+            window.JanesiBridge.callNative('openOutsideApp', {
+              'url':'mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3Dm-afMCal0zRcSxNmuMhlycvJi8BceTT8'
+            });
+        }else if(window.JanesiApi.isiOS){
+            window.JanesiBridge.callNative('openOutsideApp', {
+              'url':'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=829887725&key=cf492e93c49676b51ae07b3a15aeb7d340f271aadb0d2043093da16a0a6a7ea9&card_type=group&source=external'
+        });
+      }
+      },
+      joinTwo(){
+          if(window.JanesiApi.isAndroid){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3DjkwBJNQcQ34yZQE9Aty4Xy5J93dxcKrw'
+              });
+          }else if(window.JanesiApi.isiOS){
+              window.JanesiBridge.callNative('openOutsideApp', {
+                'url':'mqqapi://card/show_pslcard?src_type=internal&version=1&uin=829887725&key=d0f6b337173ab98a2e8b439afe7e7dfcdf76773120b5db93d17b907440ba48f3&card_type=group&source=external'
+              });
+          }
+      }
+    }
+})
+</script>
+
+</html>

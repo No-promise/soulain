@@ -1,0 +1,329 @@
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, legend, img{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-size: 0.32rem;
+    color: #333;
+    font-weight: normal;
+    overflow:hidden;
+    overflow-y: auto;
+    font-family:'PingFang SC','Microsoft YaHei','SimSun','Arial', sans-serif;
+}
+body::-webkit-scrollbar{
+	display:none;
+}
+.addBox{
+    width: 100%;
+    height: 100vh;
+    background: url("../img/Group@2x.png") no-repeat center/cover;
+    box-sizing: border-box;
+    padding-top: 0.8rem;
+    font-size: 0.24rem;
+    color: #D7FDFF;
+    position: relative;
+}
+.addTop{
+    width: 100%;
+    height: 0.6rem;
+    box-sizing: border-box;
+    padding: 0 0.3rem;
+}
+.author{
+    float: left;
+    width: 36%;
+    height: 100%;
+    background: rgba(75,142,248,.16);
+    border-radius: 0.25rem;
+    overflow: hidden;
+    line-height: 0.6rem;
+}
+.author>img{
+    float: left;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 50%;
+    margin: 0.05rem;
+    background: #fff;
+}
+.author>span{
+    width: 60%;
+    height: 100%;
+    float: left;
+    line-height: 0.6rem;
+    margin-left: 0.1rem;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.jewel_power{
+    width: 48%;
+    height: 100%;
+    border-radius: 0.25rem;
+    background: rgba(75,142,248,.16);
+    float: right;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 0.18rem;
+    line-height: 0.42rem;
+
+}
+.jewel_box{
+    width: 58%;
+    height: 100%;
+    float: left;
+    padding-top: 0.1rem;
+    box-sizing: border-box;
+}
+.jewel_power img{
+    height: 0.4rem;
+    vertical-align: top;
+    margin-right: 0.08rem;
+}
+.power_box{
+    width: 42%;
+    height: 100%;
+    float: left;
+    padding-top: 0.1rem;
+    box-sizing: border-box;
+}
+.minBox{
+    width: 100%;
+    height: 66vh;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+.minBox>.jewel{
+    width: 1rem;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    text-align: center;
+    font-size: 0.24rem;
+    color: #D7FDFF;
+    animation:starMove 3s linear infinite;
+}
+.minBox>.mine,.minBox>.login_jewel{
+    height: 1.8rem;
+    width: 1.2rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    font-size: 0.24rem;
+    color: #D7FDFF;
+    animation:starMove 3s linear infinite;
+}
+.minBox>.login_jewel{
+    width: 1.4rem;
+}
+.minBox>.login_jewel>img,.minBox>.mine>img{
+    width: 0.9rem;
+    display: block;
+    margin: 0 auto 0.1rem;
+    animation:starRotate 12s linear infinite;
+}
+.minBox>.login_jewel>span{
+    display: block;
+    background: linear-gradient(to right, #FFAC1C, #FFD01D);
+    border-radius: 0.22rem;
+    line-height: 0.48rem;
+    color: #fff;
+}
+.minBox>.mine>.time{
+    width: 100%;
+    height: 0.3rem;
+    border-radius: 0.2rem;
+    line-height: 0.3rem;
+    position: relative;
+    overflow: hidden;
+    margin: 0.05rem 0;
+    background: rgba(75,142,248,.16);
+}
+.minBox>.mine>.time>div{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 180, 34);
+    border-radius: 0.2rem;
+}
+.minBox>.mine>.time>span{
+    position: absolute;
+    text-align: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    line-height: 0.3rem;
+    z-index: 10;
+}
+
+/*矿石动画*/
+@keyframes starMove
+{
+    0%   {transform:translateY(0px);}
+    25%  {transform:translateY(10px);}
+    50% {transform:translateY(0px);}
+    75% {transform:translateY(-10px);}
+    100% {transform:translateY(0px);}
+}
+/*钻石旋转*/
+@keyframes starRotate
+{
+    0%   {transform:rotate(0deg);}
+    100% {transform:rotate(360deg);}
+}
+.minBox>.jewel>div{
+    width: 1rem;
+    height: 1rem;
+    background: url("../img/icon_mining.png") no-repeat center/cover;
+    /*background: url("../img/icon_SLK.svg") no-repeat center/cover;*/
+    margin: 0 auto;
+}
+.minBox>.jewel>span{
+    line-height: 0.4rem;
+}
+
+.correlation{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 2.5rem;
+    width: 100%;
+    z-index: 10;
+}
+.correlation_top{
+    width: 100%;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    box-sizing: border-box;
+    padding: 0 0.3rem;
+    font-size: 0.24rem;
+    color: #D7FDFF;
+    overflow: hidden;
+}
+.correlation_top>span{
+    float: left;
+    width: 12%;
+}
+.correlation_top>marquee{
+    width: 88%;
+    float: left;
+}
+.correlation_bot{
+    width: 100%;
+    height: 2rem;
+    background: #fff;
+    border-radius: 0.25rem 0.25rem 0 0;
+    box-sizing: border-box;
+    padding:0.3rem;
+}
+.cro_list{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.cro_list>li{
+    width: 1.2rem;
+    height: 100%;
+    text-align: center;
+    color: #333;
+    list-style-type: none;
+    letter-spacing: 0.02rem;
+    position: relative;
+}
+.cro_list>li>div{
+    margin: 0 auto;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 50%;
+}
+.cro_list>li>.hit{
+    color: #fff;
+    position: absolute;
+    background: #ff1d10;
+    right: -0.35rem;
+    top: 0;
+    width: 0.8rem;
+    height: 0.34rem;
+    line-height: 0.34rem;
+    text-align: center;
+    font-size: 0.24rem;
+    border-radius: 0.2rem;
+    }
+.cro_list>li>div>img{
+    width: 100%;
+}
+.cro_list>li>span{
+    line-height: 0.6rem;
+}
+
+/*新手引导*/
+.begin_guidance{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    z-index: 20;
+    padding: 0 0.3rem;
+    box-sizing: border-box;
+    display: none;
+}
+.begin_guidance>.top{
+    position: absolute;
+    left: 0;
+    bottom: 2.5rem;
+    width: 100%;
+}
+.begin_guidance>.top>img{
+    width: 5.2rem;
+    margin: 0 auto;
+    display: block;
+}
+.begin_guidance>.bot{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    overflow: hidden;
+}
+.begin_guidance>.bot>img{
+    width: 1.5rem;
+    height: 1.5rem;
+    float: left;
+    margin: 0.7rem 0.3rem;
+}
+.handHit{
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    width: 1.8rem;
+    z-index: 30;
+    animation: handMove 2s linear infinite;
+}
+.handHit>img{
+    width: 100%;
+}
+/*矿石动画*/
+@keyframes handMove
+{
+    0%   {transform:translate3d(0px,0px,0px);}
+    25%  {transform:translate3d(8px,8px,8px);}
+    50% {transform:translate3d(0px,0px,0px);}
+    75% {transform:translate3d(-8px,-8px,-8px);}
+    100% {transform:translate3d(0px,0px,0px);}
+}
+
+[v-cloak] {
+    display:none !important;
+}

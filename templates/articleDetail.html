@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*"/>
+    <script src="../js/common/setDpr.js"></script>
+    <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <title></title>
+     <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>  -->
+</head>
+
+<body contenttype='$!{content.itemType}'>
+<!--弹框提示  -->
+<div class="toast text_center">
+
+</div>
+<!--点赞 加算力  弹框-->
+<div class="calculationToast wrapper flex_alcc text_center">
+    <img class="confirm" src="../icon/InviteAndCommunity/Combined Shape@2x.jpg">
+    <p class="success">点赞成功</p>
+    <p class="addCalculation">+<span class="addCalculationNum">5</span><span>算力</span></p>
+</div>
+<div class="article" id="article">
+    <div class="article_tittle tittle">
+        
+        这脚丫子太灵活了，佩服佩服
+    
+    </div>
+    <div class="author row flex_alcc flex_jcsb">
+        <div class="goAuthorPage row flex_alcc " authorId='10891' linkUrl="https://test.soulian.janesi.com/app/soulian/content/follow_content?&userId=2160&authorId=10891&osType=ANDROID&apiVersion=1.0.0&appId=10012">
+            <!-- #if( "$!content.avatar" != "" ) -->
+                <img id="autherAvator" src="https://img.woyaogexing.com/2015/10/31/d74d4301964fe28f!200x200.jpg?spider=1" alt="">
+            <!-- #end -->
+            <div class="authorName">东方头条</div>
+            <div class="readNums">
+                <span class="num">1669</span>
+                <span class="txtscan">次阅读</span>
+            </div>
+        </div>
+
+        <div id="attention" class="text_center" isFollow="$!{isFollow}">
+            <span id="attentionStatus">关注</span>
+        </div>
+    </div>
+    <div class="article_content" id="content">
+        $!{content.body}
+    </div>
+    <!-- #if( !$content.tag.phase && $content.tag.size()>0)
+        <div class="label row wrap">
+            #foreach ($item in $content.tag)
+                <div style="display: none">$!{item}</div>
+                #if($!{item})
+                    <div class="tag">$item</div>
+                #end
+            #end
+        </div>
+    #end -->
+    <div class="userBehavior row flex_alcc flex_jcc">
+
+        <div class="behavior row flex_alcc clickPraise">
+            <img id="clickPraise" src="../img/articleAndMv/Rectangle-path2@2x.png">
+            <div class="amount" isLike="0"> 66</div>
+        </div>
+
+        <div class="behavior row flex_alcc collectArticle">
+            <img id="collect" src="../img/articleAndMv/Rectangle-path1@2x.png">
+            <div id="state" isCollect="0">收藏</div>
+        </div>
+
+        <div class="report">举报</div>
+    </div>
+    <div class="seeMore" id="seeMore">
+        <div class="readMore text_center po_ac row flex_jcc flex_alcc">
+            点击阅读全文
+            <img src="../img/articleAndMv/Combined Shape@2x.png" alt="">
+        </div>
+    </div>
+
+</div>
+<!--分割  -->
+<div class="grayLine"></div>
+<!--推荐  -->
+<div class="recommendTitle text_center">
+    相关推荐
+</div>
+<ul class="recommend" id="list">
+
+</ul>
+<script type="text/javascript">
+    // window.reqUrl = "$!{reqUrl}";
+</script>
+<script src="../js/common/zepto.js"></script>
+<script src="http://cdn.polyfill.io/v1/polyfill.min.js"></script>
+<script src="../js/common/JanesiBridges.js"></script>
+<script src="../js/common/echo.js"></script>
+<script src="../js/list.js"></script>
+<script src="../js/detailCommon.js"></script>
+<script src="../js/articleDetail.js"></script>
+<script type="text/javascript">
+    echo.init({
+        offset: 1000, //离可视区域多少像素的图片可以被加载
+        throttle: 0 //图片延时多少毫秒加载
+    })
+
+</script>
+</body>
+</html>

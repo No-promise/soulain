@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
+		<meta http-equiv="Access-Control-Allow-Origin" content="*" />
+		<title></title>
+		<script src="../js/rem.js"></script>
+		<link rel="stylesheet" href="../css/mining.css">
+
+		<!--前端页面在线测试-->
+		<!-- <script src="../js/common/vconsole.min.js"></script>
+		<script>
+             new VConsole();
+		</script> -->
+	</head>
+
+	<body id="body">
+		<section id="root" class="addBox">
+			<div class="begin_guidance" @click="linkTo('successHit')">
+				<div class="top">
+					<img src="../img/good@2x.png" alt="">
+				</div>
+				<div class="bot">
+					<img src="../img/bigWall@2x.png" alt="">
+				</div>
+			</div>
+			<div class="addTop">
+				<div class="author" @click="linkTo('author')">
+					<img :src="initData.avator" alt="">
+					<span v-text="initData.nickName"></span>
+				</div>
+				<div class="jewel_power">
+					<div class="jewel_box" @click="linkTo('wallet')">
+						<img src="../img/top_SLk@2x.png" alt="">
+						<span class="jewel_num" v-text="initData.totalSlk"></span>
+					</div>
+					<div class="power_box" @click="linkTo('task')">
+						<img src="../img/icon_power1@3x.png" alt="">
+						<span class="power_num" v-text="initData.totalPower"></span>
+					</div>
+				</div>
+			</div>
+			<div class="minBox">
+				<div class="handHit" v-if="handShow" :style="{left:handLeft+'px',top:handTop+'px'}" @click="linkTo('successHit')" v-cloak>
+					<img src="../img/handRight@2x.png" alt="">
+				</div>
+				<!--登录-->
+				<div v-cloak v-if="isLogin" class="login_jewel" @click="linkTo('toLogin')">
+					<img src="../img/icon_kuang%20copy@2x.png" alt="">
+					<span>开启登录</span>
+				</div>
+				<!--挖矿中-->
+				<div v-cloak v-if="minState" class="mine">
+					<img src="../img/icon_kuang%20copy@2x.png" alt="">
+					<div class="time">
+						<div :style="{width: bgWith}"></div>
+						<span v-text="count_down"></span>
+					</div>
+					<span>挖矿中</span>
+				</div>
+				<div v-if="jewelState" @click="click(item,index)" class="jewel" :id="'jewel'+index" style="opacity: 1" :style="{left:leftPosition[index]+'px',top:topPosition[index]+'px'}" v-for="(item, index) in jewelData" v-cloak>
+					<div></div>
+					<span v-text="item.slkNum"></span>
+				</div>
+			</div>
+			<div class="correlation">
+				<div class="correlation_top">
+					<!--<span>公告：</span>-->
+					<!--<marquee behavior="scroll" direction="left" scrollamount="4" v-text="noticeCon"></marquee>-->
+				</div>
+				<div class="correlation_bot">
+					<ul class="cro_list">
+						<li @click="linkTo('wallet')">
+							<div><img src="../img/icon_wallet@3x.png" alt=""></div>
+							<span>钱包</span>
+						</li>
+						<li @click="linkTo('task')">
+							<div><img src="../img/icon_power@3x.png" alt=""></div>
+							<span class="hit">加速</span>
+							<span>算力</span>
+						</li>
+						<li @click="linkTo('white_paper')">
+							<div><img src="../img/icon_instruction@3x.png" alt=""></div>
+							<span>白皮书</span>
+						</li>
+						<li @click="linkTo('sugar')">
+							<div><img src="../img/icon_candy@3x.png" alt=""></div>
+							<span>糖果活动</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		<audio id="music" src="../img/mucsic.mp3"></audio>
+		<script src="../js/common/jquery.min.js"></script>
+		<script src="../js/common/JanesiBridges.js"></script>
+		<script src="../js/common/vue.js"></script>
+		<script src="../js/mining.js"></script>
+	</body>
+
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>交易说明</title>
+    <script src="../js/common/setDpr.js"></script>    
+    <link rel="stylesheet" href="../css/common/common.css">
+    <link rel="stylesheet" href="../css/tradingRule.css">
+    <!-- <script src="../js/common/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>  -->
+</head>
+
+<body>
+  <div id="root" class="content">
+    <div class="tradingRecord">
+      <ul class="moveRecord" :style="transformStyle" style="display:none">
+        <li v-for="item in record">
+          <img :src="item.avator" alt="">
+          <span v-cloak>{{item.nickName}}</span>
+          <span>刚刚卖出了<span v-cloak>{{item.slk}}</span>谷粒</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="tradingHistory">
+      <div class="yestodayTrading">
+        <div class="tradingTit">
+          昨日交易
+        </div>
+        <div class="tradingDet">
+          <p><span v-cloak>{{tradeYesterday}}</span>谷粒</p>
+          <p>≈ <span v-cloak>{{yesterdayValue}}</span>元</p>
+        </div>
+      </div>
+      <div class="beforeTrading">
+        <div class="tradingTit">
+          累计交易
+        </div>
+        <div class="tradingDet">
+          <p><span v-cloak>{{tradeTotal}}</span>谷粒</p>
+          <p>≈ <span v-cloak>{{totalValue}}</span>元</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tradingLimite">
+      <div class="dayLimite">每日限量交易</div>
+      <div class="countLimite"><span>1000</span>谷粒</div>
+      <div class="limiteDetail">
+        由于平台暂未开放商业变现，所以前期每日限量小额交易，后期将会逐步开放交易额度；
+      </div>
+    </div>
+
+    <div class="tradingIntro">
+      <div class="introTit">详细说明</div>
+      <ul>
+        <li>用户选择卖出开放的数量份额，卖出成功的金额将会打款到您的微信零钱；（微信到账时间一般在24小时内）</li>
+        <li>平台将会优先选择首次发起的交易进行随机抽取审核，当数量剩余时，再从2次发起中随机抽选成交，以此类推；</li>
+        <li>每笔交易的最长有效期为7日，过期失效，需要重新发起交易；</li>
+        <li>每个份额只允许同时发起一笔交易。</li>
+      </ul>
+    </div>
+  </div>
+  <script src="../js/common/zepto.min.js"></script>
+  <script src="../js/common/JanesiBridges.js"></script>
+  <script src="../js/common/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#root',
+      data: {
+        transformStyle: {
+          transform: '',
+        },
+        translateStyle: '',
+        record: [],
+        tradeYesterday: '',
+        yesterdayValue: '',
+        tradeTotal: '',
+        totalValue: '',
+      },
+    created: function () {
+        this.waiting();//通知原生加载拖地动画
+    },
+    mounted:function(){
+        this.exposure();
+        this.getRecord();
+        this.getdata(); 
+    },
+    methods: {
+            exposure() {
+                    // window.JanesiApi.reqUrl = "http://118.25.10.151:8808/log/spm"
+                    var that = this
+                    var myDate = new Date().getTime()
+                    JanesiApi.trackApi('/log/spm', 'get', {
+                        eventType: 'show',
+                        eventTime: myDate,
+                        end_type: 'h5',
+                        url: window.location.href,
+                        referrer: '',
+                        h5_locaiton: 'trade_rule'
+                    }, function (res) {
+                        console.log('ok')
+                    })
+            },
+            waiting() {
+                window.JanesiBridge.callNative('isLoaded', {})
+            },
+            getRecord() {
+                var that = this;
+                var i = 0;
+                //window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                var reqApi = '/app/soulian/slk/trade_record';
+                window.JanesiApi.sendApi(reqApi, 'post', {
+                }, function (res) {
+                    console.log(res)
+                    if(res.result.length!='0'){
+                        that.record = res.result;
+                        document.querySelector('.moveRecord').style.display='block';
+                    }
+                    var timer = setInterval(function () {
+                        that.transformStyle.transform = "translateY(-" + 0.72 * i + "rem)";
+                        if (that.record.length - 1 == i) {
+                            that.record = that.record.concat(that.record);
+                        } else {
+                            i++
+                        }
+                    }, 2000)
+
+                })
+            },
+            getdata() {
+                var that = this;
+                //window.JanesiApi.reqUrl = 'http://10.10.10.81:8803';
+                var reqApi = '/app/soulian/slk/trade_statistics';
+                window.JanesiApi.sendApi(reqApi, 'post', {}, function (res) {
+                    console.log(res)
+                    that.tradeYesterday = res.result.tradeYesterday;
+                    that.yesterdayValue = res.result.yesterdayValue;
+                    that.tradeTotal = res.result.tradeTotal;
+                    that.totalValue = res.result.totalValue;
+                })
+            }
+        }
+    })
+  </script>
+</body>
+
+</html>
